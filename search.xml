@@ -17,12 +17,6 @@
 
 <p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
-      <categories>
-        <category>democat</category>
-      </categories>
-      <tags>
-        <tag>demotags</tag>
-      </tags>
   </entry>
   <entry>
     <title>demo111</title>
@@ -76,10 +70,81 @@
 <h1 id="✅"><a href="#✅" class="headerlink" title="✅"></a>✅</h1><p><a class="link"   href="https://www.baidu.com/" >dada <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 ]]></content>
       <categories>
-        <category>democat000</category>
+        <category>democat</category>
       </categories>
       <tags>
-        <tag>demo000</tag>
+        <tag>demo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL进阶-MVCC</title>
+    <url>/2023/09/06/MySQL/MVCC/</url>
+    <content><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-当前读"><a href="#1-当前读" class="headerlink" title="1.当前读"></a>1.当前读</h3><p>当前读就是读取记录的最新版本，读取时还要加上锁，导致其他并发事务无法访问该记录，从而阻塞其他并发事务，因此，其并发度最低。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> ? lock <span class="keyword">in</span> share mode;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="2-快照读"><a href="#2-快照读" class="headerlink" title="2.快照读"></a>2.快照读</h3><p>快照读读取的是记录的可见版本（不一定是最新的），这个读取是基于快照的，即不加锁的。快照读不依赖事务的状态，也不依赖事务的隔离级别，因此，其并发性能最好，但是，其读取的数据可能是过时的。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> ?;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-MVCC"><a href="#3-MVCC" class="headerlink" title="3.MVCC"></a>3.MVCC</h3><p>维护一个数据的多个版本，使得读写没有冲突。其具体实现，依赖于数据库记录中的三个隐字段、undo日志、ReadView。</p>
+<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-lightbulb-on"></i><p>实现原理</p>
+</div><div class="notel-content"><ul>
+<li>隐藏字段<br>在每行记录后添加两个隐藏列，分别是<br>DB_TRX_ID：事务ID<br>DB_ROLL_PTR：回滚指针指向记录的上一个版本，用于配合undo log，指向上一个版本。<br>DB_ROW_ID：隐藏主键，用于在undo log中定位记录，如果表中没有主键，则会生成一个隐藏的自增ID。</li>
+<li>undo日志<br>在修改操作时，不仅记录当前数据的日志，还要记录修改前的日志。修改时记录当前的数据到undolog<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/undolog.jpg"
+                      alt="undo log"
+                ></li>
+<li>ReadView<br>ReadView记录了系统当前活跃事务的ID列表,包含一下四个字段:<blockquote>
+<ol>
+<li>m_ids:当前活跃的事务ID集合</li>
+<li>min_trx_id:最小活跃事务ID</li>
+<li>max_trx_id:预分配事务ID,当前最大事务+1（因为事务ID是自增的）</li>
+<li>creator_trx_id:ReadView创建者的事务ID</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/readView.jpg"
+                      alt="readView"
+                ></p>
+</div></div>
+
+<ul>
+<li>在RC隔离级别下的执行过程<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/RC-.jpg"
+                      alt="readView"
+                ></li>
+</ul>
+<hr>
+<h3 id="4-事务隔离与一致原理"><a href="#4-事务隔离与一致原理" class="headerlink" title="4.事务隔离与一致原理"></a>4.事务隔离与一致原理</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/%5Cimages%5CMySQL%5C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E4%B8%80%E8%87%B4%E5%8E%9F%E7%90%86.jpg"
+                      alt="readView"
+                ></p>
+<div class="note-large default"><div class="notel-title"><p>🔚总结</p>
+</div><div class="notel-content"><ul>
+<li>MVCC+锁实现隔离</li>
+<li>redolog实现持久化+undolog实现回滚&#x3D;一致性<blockquote>
+<p>redolog（重做日志）是数据库中的一种日志文件，用于记录数据库中发生的所有更改操作，以便在发生故障时进行恢复。它记录了所有已提交的事务所做的更改，以及在故障恢复期间未提交的事务所做的更改。<br>undolog（撤消日志）是数据库中的另一种日志文件，用于记录在事务回滚期间需要撤消的更改操作。当需要回滚一个事务时，数据库会使用undolog来撤消该事务所做的更改，以便将数据库恢复到回滚之前的状态。</p>
+</blockquote>
+</li>
+</ul>
+</div></div>
+
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>

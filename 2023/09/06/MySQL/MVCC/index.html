@@ -13,22 +13,28 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/2022/09/28/hello-world/"/>
+    <link rel="canonical" href="http://example.com/2023/09/06/mysql/mvcc/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="Welcome to Hexo ! This is your very first post. Check documentation  for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting  or you can ask me on GitHub . Q">
+        <meta name="description" content="RR&#x2F;RC隔离机制与MVCC">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redefine 主题使用指南">
-<meta property="og:url" content="http://example.com/2022/09/28/hello-world/index.html">
+<meta property="og:title" content="MySQL进阶-MVCC">
+<meta property="og:url" content="http://example.com/2023/09/06/MySQL/MVCC/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo ! This is your very first post. Check documentation  for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting  or you can ask me on GitHub . Q">
+<meta property="og:description" content="RR&#x2F;RC隔离机制与MVCC">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-28T03:45:14.000Z">
-<meta property="article:modified_time" content="2023-09-06T07:17:39.715Z">
+<meta property="og:image" content="http://example.com/images/MySQL/undolog.jpg">
+<meta property="og:image" content="http://example.com/images/MySQL/readView.jpg">
+<meta property="og:image" content="http://example.com/images/MySQL/RC-.jpg">
+<meta property="og:image" content="http://example.com/%5Cimages%5CMySQL%5C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E4%B8%80%E8%87%B4%E5%8E%9F%E7%90%86.jpg">
+<meta property="article:published_time" content="2023-09-06T02:54:46.425Z">
+<meta property="article:modified_time" content="2023-09-06T07:17:53.332Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/MySQL/undolog.jpg">
     
     
     <!--- Icon Part-->
@@ -40,7 +46,7 @@
     
     <title>
         
-            Redefine 主题使用指南 -
+            MySQL进阶-MVCC -
         
         Jason&#39;s Home
     </title>
@@ -304,9 +310,9 @@
             
                 
                 
-                <img src="https://evan.beee.top/img/208184324-f2640ade-587a-4f46-8ad1-7b4c1b31394f.png" alt="Redefine 主题使用指南" class="max-w-none"/>
+                <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-MVCC" class="max-w-none"/>
                 
-                <h1 class="article-title-cover">Redefine 主题使用指南</h1>
+                <h1 class="article-title-cover">MySQL进阶-MVCC</h1>
             
             </div>
             
@@ -328,31 +334,68 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2022-09-28 11:45:14</span>
-        <span class="mobile">2022-09-28 11:45:14</span>
+        <span class="desktop">2023-09-06 10:54:46</span>
+        <span class="mobile">2023-09-06 10:54:46</span>
         <span class="hover-info">Created</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-09-06 15:17:39</span>
-            <span class="mobile">2023-09-06 15:17:39</span>
+            <span class="desktop">2023-09-06 15:17:53</span>
+            <span class="mobile">2023-09-06 15:17:53</span>
             <span class="hover-info">Updated</span>
         </span>
     
 
     
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/JAVA/">JAVA</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/JAVA/MySQL/">MySQL</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>75 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>620 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 Mins</span>
         </span>
     
     
@@ -371,19 +414,65 @@
 
 
         <div class="article-content markdown-body">
-            <p>Welcome to <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
+            <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-当前读"><a href="#1-当前读" class="headerlink" title="1.当前读"></a>1.当前读</h3><p>当前读就是读取记录的最新版本，读取时还要加上锁，导致其他并发事务无法访问该记录，从而阻塞其他并发事务，因此，其并发度最低。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> ? lock <span class="keyword">in</span> share mode;</span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+<h3 id="2-快照读"><a href="#2-快照读" class="headerlink" title="2.快照读"></a>2.快照读</h3><p>快照读读取的是记录的可见版本（不一定是最新的），这个读取是基于快照的，即不加锁的。快照读不依赖事务的状态，也不依赖事务的隔离级别，因此，其并发性能最好，但是，其读取的数据可能是过时的。</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t <span class="keyword">where</span> ?;</span><br></pre></td></tr></table></figure></div>
 
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+<h3 id="3-MVCC"><a href="#3-MVCC" class="headerlink" title="3.MVCC"></a>3.MVCC</h3><p>维护一个数据的多个版本，使得读写没有冲突。其具体实现，依赖于数据库记录中的三个隐字段、undo日志、ReadView。</p>
+<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-lightbulb-on"></i><p>实现原理</p>
+</div><div class="notel-content"><ul>
+<li>隐藏字段<br>在每行记录后添加两个隐藏列，分别是<br>DB_TRX_ID：事务ID<br>DB_ROLL_PTR：回滚指针指向记录的上一个版本，用于配合undo log，指向上一个版本。<br>DB_ROW_ID：隐藏主键，用于在undo log中定位记录，如果表中没有主键，则会生成一个隐藏的自增ID。</li>
+<li>undo日志<br>在修改操作时，不仅记录当前数据的日志，还要记录修改前的日志。修改时记录当前的数据到undolog<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/undolog.jpg"
+                      alt="undo log"
+                ></li>
+<li>ReadView<br>ReadView记录了系统当前活跃事务的ID列表,包含一下四个字段:<blockquote>
+<ol>
+<li>m_ids:当前活跃的事务ID集合</li>
+<li>min_trx_id:最小活跃事务ID</li>
+<li>max_trx_id:预分配事务ID,当前最大事务+1（因为事务ID是自增的）</li>
+<li>creator_trx_id:ReadView创建者的事务ID</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/readView.jpg"
+                      alt="readView"
+                ></p>
+</div></div>
 
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
+<ul>
+<li>在RC隔离级别下的执行过程<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/RC-.jpg"
+                      alt="readView"
+                ></li>
+</ul>
+<hr>
+<h3 id="4-事务隔离与一致原理"><a href="#4-事务隔离与一致原理" class="headerlink" title="4.事务隔离与一致原理"></a>4.事务隔离与一致原理</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/%5Cimages%5CMySQL%5C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E4%B8%80%E8%87%B4%E5%8E%9F%E7%90%86.jpg"
+                      alt="readView"
+                ></p>
+<div class="note-large default"><div class="notel-title"><p>🔚总结</p>
+</div><div class="notel-content"><ul>
+<li>MVCC+锁实现隔离</li>
+<li>redolog实现持久化+undolog实现回滚&#x3D;一致性<blockquote>
+<p>redolog（重做日志）是数据库中的一种日志文件，用于记录数据库中发生的所有更改操作，以便在发生故障时进行恢复。它记录了所有已提交的事务所做的更改，以及在故障恢复期间未提交的事务所做的更改。<br>undolog（撤消日志）是数据库中的另一种日志文件，用于记录在事务回滚期间需要撤消的更改操作。当需要回滚一个事务时，数据库会使用undolog来撤消该事务所做的更改，以便将数据库恢复到回滚之前的状态。</p>
+</blockquote>
+</li>
+</ul>
+</div></div>
 
-<p>More info: <a class="link"   target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
 
         </div>
 
@@ -391,18 +480,18 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> Redefine 主题使用指南</li>
+        <li><strong>Title:</strong> MySQL进阶-MVCC</li>
         <li><strong>Author:</strong> Jason Be</li>
         <li><strong>Created at
-                :</strong> 2022-09-28 11:45:14</li>
+                :</strong> 2023-09-06 10:54:46</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2023-09-06 15:17:39
+                    :</strong> 2023-09-06 15:17:53
             </li>
         
         <li>
-            <strong>Link:</strong> http://example.com/2022/09/28/hello-world/
+            <strong>Link:</strong> http://example.com/2023/09/06/MySQL/MVCC/
         </li>
         <li>
             <strong>
@@ -420,27 +509,35 @@
         
 
         
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/MySQL/">#MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
 
         
 
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                        rel="prev"
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
                         href="/2023/07/30/demo01/"
                         >
-                            <span class="left arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-left"></i>
-                            </span>
                             <span class="title flex justify-center items-center">
                                 <span class="post-nav-title-item">demo111</span>
-                                <span class="post-nav-item">Prev posts</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
                             </span>
                         </a>
                     </div>
-                
                 
             </div>
         
@@ -498,8 +595,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">Redefine 主题使用指南</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol>
+        <div class="page-title">MySQL进阶-MVCC</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BD%93%E5%89%8D%E8%AF%BB"><span class="nav-text">1.当前读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BF%AB%E7%85%A7%E8%AF%BB"><span class="nav-text">2.快照读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-MVCC"><span class="nav-text">3.MVCC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E4%B8%80%E8%87%B4%E5%8E%9F%E7%90%86"><span class="nav-text">4.事务隔离与一致原理</span></a></li></ol></li></ol>
 
     </div>
 </div>
