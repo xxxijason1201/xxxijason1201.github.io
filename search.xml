@@ -186,7 +186,7 @@
 <h4 id="4-4-explain"><a href="#4-4-explain" class="headerlink" title="4.4 explain"></a>4.4 explain</h4><p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/mysql/explain.jpg"
+                     data-src="/images/MySQL/explain.jpg"
                       alt="explain"
                 ></p>
 <div class="note default"><p>type: 性能指标</p>
@@ -217,7 +217,7 @@
 <li>单列索引VS联合索引<br><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="/images/mysql/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.jpg"
+                     data-src="/images/MySQL/%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95.jpg"
                       alt="联合索引"
                 ></li>
 <li>覆盖索引 无需回表查询</li>
