@@ -242,4 +242,70 @@
         <tag>Tour</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MySQL进阶-存储过程</title>
+    <url>/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1.基本语法"></a>1.基本语法</h3><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">DELIMITER $$ <span class="comment">-- 修改SQL语句的结束符为$$</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> 存储过程名(参数列表) <span class="comment">-- 创建存储过程</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="comment">-- 存储过程体</span></span><br><span class="line"><span class="keyword">END</span> $$ <span class="comment">-- 存储过程结束  </span></span><br><span class="line">DELIMITER ; <span class="comment">-- 修改回原来的结束符</span></span><br></pre></td></tr></table></figure></div>
+<h3 id="2-变量"><a href="#2-变量" class="headerlink" title="2.变量"></a>2.变量</h3><ul>
+<li>系统变量<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> session<span class="operator">/</span><span class="keyword">global</span> variables <span class="comment">--支持模糊查询</span></span><br><span class="line"><span class="keyword">select</span> @<span class="variable">@autocommit</span> <span class="comment">--查看变量</span></span><br><span class="line"><span class="keyword">set</span> @<span class="variable">@autocommit</span> <span class="operator">=</span> <span class="number">0</span> <span class="comment">--修改变量</span></span><br></pre></td></tr></table></figure></div></li>
+<li>自定义变量<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 仅限会话</span></span><br><span class="line"><span class="keyword">set</span> @变量名 <span class="operator">=</span> 值    </span><br><span class="line"><span class="keyword">select</span> @变量名 <span class="comment">-- 查看</span></span><br></pre></td></tr></table></figure></div></li>
+<li>局部变量<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 仅限存储过程</span></span><br><span class="line"><span class="keyword">declare</span> 变量名 <span class="string">&#x27;类型&#x27;</span> [<span class="keyword">default</span> 值]</span><br><span class="line"><span class="keyword">set</span> 变量名 <span class="operator">=</span> 值</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+<h3 id="3-流程控制"><a href="#3-流程控制" class="headerlink" title="3.流程控制"></a>3.流程控制</h3><ul>
+<li><p>if</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 单分支</span></span><br><span class="line">if 条件 <span class="keyword">then</span></span><br><span class="line">elseif <span class="keyword">then</span> </span><br><span class="line"><span class="keyword">else</span> </span><br><span class="line"><span class="keyword">end</span> if;</span><br></pre></td></tr></table></figure></div></li>
+<li><p>参数</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 参数</span></span><br><span class="line"><span class="keyword">IN</span> 输入参数 <span class="keyword">OUT</span> 输出参数 <span class="keyword">INOUT</span> 输入输出参数</span><br></pre></td></tr></table></figure></div></li>
+<li><p>循环：</p>
+<ul>
+<li>while </li>
+<li>repeat 满足条件退出循环</li>
+<li>loop 配合 leave 退出循环 iterate 继续下次循环 使用<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line">while 条件 do</span><br><span class="line"><span class="keyword">end</span> while;</span><br><span class="line">repeat</span><br><span class="line">until 条件 <span class="keyword">end</span> repeat;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+</li>
+<li><p>游标</p>
+<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 游标</span></span><br><span class="line"><span class="keyword">declare</span> 游标名 <span class="keyword">cursor</span> <span class="keyword">for</span> 查询语句;</span><br><span class="line"><span class="keyword">open</span> 游标名; <span class="comment">-- 打开游标        </span></span><br><span class="line"><span class="keyword">fetch</span> 游标名 <span class="keyword">into</span> 变量名; <span class="comment">-- 获取数据               </span></span><br><span class="line"><span class="keyword">close</span> 游标名; <span class="comment">-- 关闭游标                                   </span></span><br></pre></td></tr></table></figure></div>
+</li>
+<li><p>异常</p>
+</li>
+</ul>
+<pre><code class="sql">-- 异常                 
+declare exit handler for [SQLSTATE &#39;XXXX&#39;(异常状态码)/not found] 执行操作        
+</code></pre>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E6%B8%B8%E6%A0%87%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.jpg"
+                      alt="存储过程游标异常处理.jpg"
+                ></p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL进阶-视图</title>
+    <url>/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/</url>
+    <content><![CDATA[<h3 id="1-基本命令"><a href="#1-基本命令" class="headerlink" title="1.基本命令"></a>1.基本命令</h3><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 创建视图</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名称 <span class="keyword">AS</span> 查询语句;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 修改视图 </span></span><br><span class="line"><span class="keyword">ALTER</span> <span class="keyword">VIEW</span> 视图名称 <span class="keyword">AS</span> 查询语句;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除视图                                 </span></span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> 视图名称;                                                                             </span><br><span class="line"><span class="comment">-- 查看视图                                                     </span></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">VIEW</span> 视图名称;</span><br></pre></td></tr></table></figure></div>
+<h3 id="2-检查选项cascaded"><a href="#2-检查选项cascaded" class="headerlink" title="2.检查选项cascaded"></a>2.检查选项cascaded</h3> <div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span> v1 <span class="keyword">as</span> <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> t1 <span class="keyword">with</span> <span class="keyword">cascaded</span> <span class="keyword">check</span> option;</span><br><span class="line"><span class="comment">-- cascaded 级联 向下传递验证</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="keyword">local</span> <span class="keyword">check</span> option;</span><br><span class="line"> <span class="comment">--- local 本地 只检查当前视图  不会再向下验证。 eg:v2视图是基于v1视图的，如果在v2视图创建的时候指定了检查选项为 local ，但是v1视图创 建时未指定检查选项。 则在执行检查时，只检查v2，不会检查v2的关联视图v1。</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="3-视图的更新"><a href="#3-视图的更新" class="headerlink" title="3.视图的更新"></a>3.视图的更新</h3><p>视图必须与基础表一一对应才能增删改</p>
+<h3 id="4-视图作用"><a href="#4-视图作用" class="headerlink" title="4.视图作用"></a>4.视图作用</h3><ul>
+<li>简单 将常用的sql封装成视图 简化操作</li>
+<li>安全 权限分配</li>
+<li>数据独立 屏蔽真实的表结构</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
 </search>
