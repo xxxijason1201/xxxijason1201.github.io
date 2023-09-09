@@ -13,17 +13,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/archives/2023/09/"/>
+    <link rel="canonical" href="http://example.com/2023/09/08/mysql/事务隔离与锁/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2023/09/index.html">
+        <meta name="description" content="note 本质上，事务隔离级别就是为了解决并发访问下的数据一致性问题的。不同的事务隔离级别，解决了不同程度的数据一致性。而我们所说的全局锁、表锁、行级锁等等，其实都是事务隔离级别的具体实现。而 MVCC、意向锁，则是一些局部的性能优化。   1.事务的隔离级别 读未提交（Read Uncommitted）读还没有提交的数据 会产生脏读 比如 事务A读取了事务B未提交的数据 然后事务B回滚了 事务A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL进阶-事务隔离与锁">
+<meta property="og:url" content="http://example.com/2023/09/08/MySQL/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%94%81/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="note 本质上，事务隔离级别就是为了解决并发访问下的数据一致性问题的。不同的事务隔离级别，解决了不同程度的数据一致性。而我们所说的全局锁、表锁、行级锁等等，其实都是事务隔离级别的具体实现。而 MVCC、意向锁，则是一些局部的性能优化。   1.事务的隔离级别 读未提交（Read Uncommitted）读还没有提交的数据 会产生脏读 比如 事务A读取了事务B未提交的数据 然后事务B回滚了 事务A">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-08T12:11:44.308Z">
+<meta property="article:modified_time" content="2023-09-09T02:10:55.609Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
     
     
@@ -36,7 +41,7 @@
     
     <title>
         
-            Archive: 2023/9 -
+            MySQL进阶-事务隔离与锁 -
         
         Jason&#39;s Home
     </title>
@@ -154,7 +159,7 @@
                         
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active" 
+                                <a class="" 
                                     href="/archives"  >
                                     
                                         
@@ -237,7 +242,7 @@
             
                 
                     <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
-                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group active" 
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
                         href="/archives"  >
                              
                                 
@@ -293,87 +298,273 @@
             <div class="main-content">
 
                 
-                    <div class="archive-container ">
-    
-<div class="archive-list-container">
-    
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2023</span>
-                <span class="archive-year-post-count">[8]</span>
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                
+                
+                <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-事务隔离与锁" class="max-w-none"/>
+                
+                <h1 class="article-title-cover">MySQL进阶-事务隔离与锁</h1>
+            
             </div>
-            <ul class="article-list">
-              
-              <li class="article-item" date-is='09-08'>
-                <a href="/2023/09/08/MySQL/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%94%81/">
-                  <span class="article-title">MySQL进阶-事务隔离与锁</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-08'>
-                <a href="/2023/09/08/MySQL/%E9%94%81/">
-                  <span class="article-title">MySQL进阶-锁</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
-                  <span class="article-title">MySQL进阶-存储过程</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/">
-                  <span class="article-title">MySQL进阶-视图</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/Some%20to%20say/dis_break_01/">
-                  <span class="article-title">奔赴</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E7%B4%A2%E5%BC%95/">
-                  <span class="article-title">MySQL进阶-索引</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-06'>
-                <a href="/2023/09/06/MySQL/MVCC/">
-                  <span class="article-title">MySQL进阶-MVCC</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='07-30'>
-                <a href="/2023/07/30/demo01/">
-                  <span class="article-title">demo111</span>
-                </a>
-              </li>
-              
-            </ul>
-        </section>
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Jason Be</span>
+                        
+                            <span class="author-label">Lv2</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-08 20:11:44</span>
+        <span class="mobile">2023-09-08 20:11:44</span>
+        <span class="hover-info">Created</span>
+    </span>
     
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2022</span>
-                <span class="archive-year-post-count">[1]</span>
-            </div>
-            <ul class="article-list">
-              
-              <li class="article-item" date-is='09-28'>
-                <a href="/2022/09/28/hello-world/">
-                  <span class="article-title">Redefine 主题使用指南</span>
-                </a>
-              </li>
-              
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-09 10:10:55</span>
+            <span class="mobile">2023-09-09 10:10:55</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/JAVA/">JAVA</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/JAVA/MySQL/">MySQL</a>&nbsp;
+                        </li>
+                    
+                    
+                
             </ul>
-        </section>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>667 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>2 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <div class="note-large note"><div class="notel-title"><p>note</p>
+</div><div class="notel-content"><p>本质上，事务隔离级别就是为了解决并发访问下的数据一致性问题的。不同的事务隔离级别，解决了不同程度的数据一致性。而我们所说的全局锁、表锁、行级锁等等，其实都是事务隔离级别的具体实现。而 MVCC、意向锁，则是一些局部的性能优化。</p>
+</div></div>
+
+<h3 id="1-事务的隔离级别"><a href="#1-事务的隔离级别" class="headerlink" title="1.事务的隔离级别"></a>1.事务的隔离级别</h3><ul>
+<li><p>读未提交（Read Uncommitted）<br>读还没有提交的数据 会产生脏读 比如 事务A读取了事务B未提交的数据 然后事务B回滚了 事务A读取的数据就无效了</p>
+</li>
+<li><p>读已提交（Read Committed）<br>读已经提交的数据 不会产生<code>脏读 </code>但会产生<code>不可重复读</code>是指事务A读取了事务B已经提交的数据 然后事务B修改了数据 事务A再次读取的数据和第一次读取的数据不一样</p>
+</li>
+<li><p>可重复读（Repeatable Read）<br>这个隔离级别解决了<code>不可重复读</code>的问题，只要是在同一事务范围内，那么读取到的数据就是一样的。对于 MySQL Innodb 来说，其实通过 MVCC 来实现的。但<code>不可重复读</code>隔离级别会产生幻读问题，即对于某个<code>范围</code>的数据读取，前后两次可能读取到不同的结果。</p>
+<blockquote>
+<p>举个例子：数据库中有 price 为 1、3、5 三个商品，此时 A 事务查询 price &lt; 10 的商品，查询到了 3 个商品。随后 B 事务插入了一条 price 为 7 的商品。接着 A 事务继续查询 price &lt; 10 的商品，这次却查询到了 4 个商品。可以看到「幻读」与「不可重复读」是有些类似的，只是「不可重复读」更多指的是某一条记录，而「幻读」指的则是某个范围数据。对于 MySQL Innodb 来说，其通过行级锁级别的 Gap Lock 解决了幻读的问题。</p>
+</blockquote>
+</li>
+<li><p>串行化（Serializable）<br>串行化，指的是所有事务串行执行。 这个就最简单了，不用去竞争，一个个去执行，但是效率也是最低的。</p>
+</li>
+</ul>
+<h3 id="2-锁"><a href="#2-锁" class="headerlink" title="2.锁"></a>2.锁</h3><ul>
+<li>表级的意向排它锁（IX）：lock mode IX。</li>
+<li>表级的插入意向锁（LOCK_INSERT_INTENTION）: lock_mode X locks gap before rec insert intention</li>
+<li>行级的记录锁（LOCK_REC_NOT_GAP）: lock_mode X locks rec but not gap</li>
+<li>行级的间隙锁（LOCK_GAP）: lock_mode X locks gap before rec</li>
+<li>行级的 Next-key 锁（LOCK_ORNIDARY）: lock_mode X<br>在 Innodb 存储引擎中，我们可以通过下面的命令来查询锁的情况。<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span> 开启锁的日志</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> innodb_status_output_locks<span class="operator">=</span><span class="keyword">on</span>; </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 查看innodb引擎的信息(包含锁的信息)</span><br><span class="line"><span class="keyword">show</span> engine innodb status\G;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> MySQL进阶-事务隔离与锁</li>
+        <li><strong>Author:</strong> Jason Be</li>
+        <li><strong>Created at
+                :</strong> 2023-09-08 20:11:44</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2023-09-09 10:10:55
+            </li>
+        
+        <li>
+            <strong>Link:</strong> http://example.com/2023/09/08/MySQL/事务隔离与锁/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+            This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+            
+
+        </li>
+    </ul>
 </div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/MySQL/">#MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/08/MySQL/%E9%94%81/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">MySQL进阶-锁</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://waline-xxxijason.6eek.net',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">MySQL进阶-事务隔离与锁</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-text">1.事务的隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%94%81"><span class="nav-text">2.锁</span></a></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
 
                 
 
@@ -446,6 +637,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">

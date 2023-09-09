@@ -337,7 +337,7 @@
 <p>间隙锁，锁定一个范围，但不包含本身，如(1,5<br>间隙锁是存储引擎为了防止幻读，而引入的锁机制。间隙锁之间是互不冲突的，因此可以有多个</p>
 </blockquote>
 </li>
-<li>临键锁<blockquote>
+<li>临键锁 （next-key lock）<blockquote>
 <p>临键锁，锁定一个范围，并且包含本身</p>
 </blockquote>
 </li>
@@ -368,9 +368,48 @@
 <p>MVCC并发控制中，读操作可以分成两类：快照读 (snapshot read)与当前读 (current read)。</p>
 <p>快照读，读取的是记录的可见版本 (有可能是历史版本)，不用加锁。</p>
 <p>当前读，读取的是记录的最新版本，并且，当前读返回的记录，都会加上锁，保证其他事务不会再并发修改这条记录。</p>
+<div class="note 事务隔离机制与锁"><p>在 RC 级别下，对于快照数据，一致性非锁定读总是读取被锁定行的最新一份快照数据。<br>在 RR 级别下，对于快照数据，一致性非锁定读总是读取本事务开始时的行数据版本。</p>
+</div>
+
 <h4 id="什么是多版本并发控制（MVCC：multi-version-concurrency-control-）"><a href="#什么是多版本并发控制（MVCC：multi-version-concurrency-control-）" class="headerlink" title="什么是多版本并发控制（MVCC：multi-version concurrency control ）"></a>什么是多版本并发控制（MVCC：multi-version concurrency control ）</h4><blockquote>
 <p>MVCC定义：多版并发控制系统。可认为是行级锁的一个变种，它能够避免更多情况下的加锁操作。<br>作用：避免一些加锁操作，提升并发性能。<br>实现：通过在每行记录的后面保存行的创建时间和过期时间或删除时间（它们是隐藏的），这两个时间实际都是系统的版本号。每开始一个新的事务，版本号都会自动增加。<br>具体原理<br>1.select：innoBD查询时会检查以下两个条件：一个是数据行的版本号早于当前事务的版本号；另一个是行的删除版本号，要么没有，要么大于当前事务的版本号。<br>2.insert&#x2F;delete：innoDB将当前的系统版本号作为新插入(删除)的数据行的版本号。<br>3.update：先新插入一行数据，并将当前系统版本号作为行的版本号，同时将当前系统版本号作为原来行的删除版本号。更新主键时，聚集索引和普通索引都会产生两个版本；而更新非主键时，只要普通索引会产生两个版本。</p>
 </blockquote>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL进阶-事务隔离与锁</title>
+    <url>/2023/09/08/MySQL/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%94%81/</url>
+    <content><![CDATA[<div class="note-large note"><div class="notel-title"><p>note</p>
+</div><div class="notel-content"><p>本质上，事务隔离级别就是为了解决并发访问下的数据一致性问题的。不同的事务隔离级别，解决了不同程度的数据一致性。而我们所说的全局锁、表锁、行级锁等等，其实都是事务隔离级别的具体实现。而 MVCC、意向锁，则是一些局部的性能优化。</p>
+</div></div>
+
+<h3 id="1-事务的隔离级别"><a href="#1-事务的隔离级别" class="headerlink" title="1.事务的隔离级别"></a>1.事务的隔离级别</h3><ul>
+<li><p>读未提交（Read Uncommitted）<br>读还没有提交的数据 会产生脏读 比如 事务A读取了事务B未提交的数据 然后事务B回滚了 事务A读取的数据就无效了</p>
+</li>
+<li><p>读已提交（Read Committed）<br>读已经提交的数据 不会产生<code>脏读 </code>但会产生<code>不可重复读</code>是指事务A读取了事务B已经提交的数据 然后事务B修改了数据 事务A再次读取的数据和第一次读取的数据不一样</p>
+</li>
+<li><p>可重复读（Repeatable Read）<br>这个隔离级别解决了<code>不可重复读</code>的问题，只要是在同一事务范围内，那么读取到的数据就是一样的。对于 MySQL Innodb 来说，其实通过 MVCC 来实现的。但<code>不可重复读</code>隔离级别会产生幻读问题，即对于某个<code>范围</code>的数据读取，前后两次可能读取到不同的结果。</p>
+<blockquote>
+<p>举个例子：数据库中有 price 为 1、3、5 三个商品，此时 A 事务查询 price &lt; 10 的商品，查询到了 3 个商品。随后 B 事务插入了一条 price 为 7 的商品。接着 A 事务继续查询 price &lt; 10 的商品，这次却查询到了 4 个商品。可以看到「幻读」与「不可重复读」是有些类似的，只是「不可重复读」更多指的是某一条记录，而「幻读」指的则是某个范围数据。对于 MySQL Innodb 来说，其通过行级锁级别的 Gap Lock 解决了幻读的问题。</p>
+</blockquote>
+</li>
+<li><p>串行化（Serializable）<br>串行化，指的是所有事务串行执行。 这个就最简单了，不用去竞争，一个个去执行，但是效率也是最低的。</p>
+</li>
+</ul>
+<h3 id="2-锁"><a href="#2-锁" class="headerlink" title="2.锁"></a>2.锁</h3><ul>
+<li>表级的意向排它锁（IX）：lock mode IX。</li>
+<li>表级的插入意向锁（LOCK_INSERT_INTENTION）: lock_mode X locks gap before rec insert intention</li>
+<li>行级的记录锁（LOCK_REC_NOT_GAP）: lock_mode X locks rec but not gap</li>
+<li>行级的间隙锁（LOCK_GAP）: lock_mode X locks gap before rec</li>
+<li>行级的 Next-key 锁（LOCK_ORNIDARY）: lock_mode X<br>在 Innodb 存储引擎中，我们可以通过下面的命令来查询锁的情况。<div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span> 开启锁的日志</span><br><span class="line"><span class="keyword">set</span> <span class="keyword">global</span> innodb_status_output_locks<span class="operator">=</span><span class="keyword">on</span>; </span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 查看innodb引擎的信息(包含锁的信息)</span><br><span class="line"><span class="keyword">show</span> engine innodb status\G;</span><br></pre></td></tr></table></figure></div></li>
+</ul>
 ]]></content>
       <categories>
         <category>JAVA</category>
