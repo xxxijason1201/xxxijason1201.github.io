@@ -29,8 +29,9 @@
 <meta property="og:image" content="http://example.com/images/MySQL/readView.jpg">
 <meta property="og:image" content="http://example.com/images/MySQL/RC-.jpg">
 <meta property="og:image" content="http://example.com/%5Cimages%5CMySQL%5C%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E4%B8%80%E8%87%B4%E5%8E%9F%E7%90%86.jpg">
+<meta property="og:image" content="http://example.com/images/MySQL/%E4%BA%8B%E5%8A%A1%E5%8E%9F%E7%90%86.jpg">
 <meta property="article:published_time" content="2023-09-06T02:54:46.425Z">
-<meta property="article:modified_time" content="2023-09-06T07:17:53.332Z">
+<meta property="article:modified_time" content="2023-09-09T02:38:50.299Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
@@ -341,8 +342,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-09-06 15:17:53</span>
-            <span class="mobile">2023-09-06 15:17:53</span>
+            <span class="desktop">2023-09-09 10:38:50</span>
+            <span class="mobile">2023-09-09 10:38:50</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -390,7 +391,7 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>620 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>629 Words</span>
         </span>
     
     
@@ -466,13 +467,18 @@
 <div class="note-large default"><div class="notel-title"><p>🔚总结</p>
 </div><div class="notel-content"><ul>
 <li>MVCC+锁实现隔离</li>
-<li>redolog实现持久化+undolog实现回滚&#x3D;一致性<blockquote>
+<li>redolog实现持久化+undolog实现回滚&#x3D;&#x3D;&gt;事务的持久性 一致 原子<blockquote>
 <p>redolog（重做日志）是数据库中的一种日志文件，用于记录数据库中发生的所有更改操作，以便在发生故障时进行恢复。它记录了所有已提交的事务所做的更改，以及在故障恢复期间未提交的事务所做的更改。<br>undolog（撤消日志）是数据库中的另一种日志文件，用于记录在事务回滚期间需要撤消的更改操作。当需要回滚一个事务时，数据库会使用undolog来撤消该事务所做的更改，以便将数据库恢复到回滚之前的状态。</p>
 </blockquote>
 </li>
 </ul>
 </div></div>
-
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E4%BA%8B%E5%8A%A1%E5%8E%9F%E7%90%86.jpg"
+                     
+                ></p>
 
         </div>
 
@@ -487,7 +493,7 @@
         
             <li>
                 <strong>Updated at
-                    :</strong> 2023-09-06 15:17:53
+                    :</strong> 2023-09-09 10:38:50
             </li>
         
         <li>
@@ -538,21 +544,6 @@
                         </a>
                     </div>
                 
-                
-                    <div class="article-next">
-                        <a class="next"
-                        rel="next"
-                        href="/2023/07/30/demo01/"
-                        >
-                            <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">demo111</span>
-                                <span class="post-nav-item">Next posts</span>
-                            </span>
-                            <span class="right arrow-icon flex justify-center items-center">
-                                <i class="fa-solid fa-chevron-right"></i>
-                            </span>
-                        </a>
-                    </div>
                 
             </div>
         

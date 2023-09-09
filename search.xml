@@ -1,82 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Redefine 主题使用指南</title>
-    <url>/2022/09/28/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>demo111</title>
-    <url>/2023/07/30/demo01/</url>
-    <content><![CDATA[<h1 id="h1"><a href="#h1" class="headerlink" title="h1"></a>h1</h1><h2 id="h2"><a href="#h2" class="headerlink" title="h2"></a>h2</h2><h3 id="h3"><a href="#h3" class="headerlink" title="h3"></a>h3</h3><h4 id="h4"><a href="#h4" class="headerlink" title="h4"></a>h4</h4><p>caonimade<br>caonasdasasdawdawdaw</p>
-<p><br><br><br>今天吃什么<br>我不知道啊</p>
-<p>love is <strong>shit</strong></p>
-<p>love is <em>hurt</em></p>
-<p>love is <em><strong>shit</strong></em></p>
-<blockquote>
-<p>不知道吃什么</p>
-</blockquote>
-<blockquote>
-<p>今天天气</p>
-<blockquote>
-<p>不咋地</p>
-</blockquote>
-</blockquote>
-<blockquote>
-<p>###大大大</p>
-<ul>
-<li>this is my dick</li>
-<li>hhhaha</li>
-</ul>
-<p><em>shit</em></p>
-</blockquote>
-<ol>
-<li><p>Open the file containing the Linux mascot.</p>
-</li>
-<li><p>Marvel at its beauty.</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/avatar.jpg"
-                     
-                ></p>
-</li>
-<li><p>Close the file.</p>
-</li>
-</ol>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">sdasd</span><br></pre></td></tr></table></figure></div>
-
-<div class="highlight-container" data-rel="Json"><figure class="iseeu highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;firstName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;John&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lastName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Smith&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">25</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></div>
-
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Write the press release</li>
-<li><input disabled="" type="checkbox"> Update the website</li>
-<li><input disabled="" type="checkbox"> Contact the media</li>
-</ul>
-<p>:cupid:<br>:star:</p>
-<h1 id="✅"><a href="#✅" class="headerlink" title="✅"></a>✅</h1><p><a class="link"   href="https://www.baidu.com/" >dada <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-      <categories>
-        <category>democat</category>
-      </categories>
-      <tags>
-        <tag>demo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL进阶-MVCC</title>
     <url>/2023/09/06/MySQL/MVCC/</url>
     <content><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-当前读"><a href="#1-当前读" class="headerlink" title="1.当前读"></a>1.当前读</h3><p>当前读就是读取记录的最新版本，读取时还要加上锁，导致其他并发事务无法访问该记录，从而阻塞其他并发事务，因此，其并发度最低。</p>
@@ -131,13 +55,18 @@
 <div class="note-large default"><div class="notel-title"><p>🔚总结</p>
 </div><div class="notel-content"><ul>
 <li>MVCC+锁实现隔离</li>
-<li>redolog实现持久化+undolog实现回滚&#x3D;一致性<blockquote>
+<li>redolog实现持久化+undolog实现回滚&#x3D;&#x3D;&gt;事务的持久性 一致 原子<blockquote>
 <p>redolog（重做日志）是数据库中的一种日志文件，用于记录数据库中发生的所有更改操作，以便在发生故障时进行恢复。它记录了所有已提交的事务所做的更改，以及在故障恢复期间未提交的事务所做的更改。<br>undolog（撤消日志）是数据库中的另一种日志文件，用于记录在事务回滚期间需要撤消的更改操作。当需要回滚一个事务时，数据库会使用undolog来撤消该事务所做的更改，以便将数据库恢复到回滚之前的状态。</p>
 </blockquote>
 </li>
 </ul>
 </div></div>
-
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E4%BA%8B%E5%8A%A1%E5%8E%9F%E7%90%86.jpg"
+                     
+                ></p>
 ]]></content>
       <categories>
         <category>JAVA</category>
@@ -417,6 +346,73 @@
       </categories>
       <tags>
         <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>贪心</title>
+    <url>/2023/09/09/LeetCode/%E8%B4%AA%E5%BF%83/</url>
+    <content><![CDATA[<h3 id="455-Assign-Cookies"><a href="#455-Assign-Cookies" class="headerlink" title="455. Assign Cookies"></a>455. <a class="link"   href="https://leetcode-cn.com/problems/assign-cookies/" >Assign Cookies <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></h3><p>Difficulty: <strong>Medium</strong><br>Tags: <code>Greedy</code> <code>Two Pointers</code></p>
+<blockquote>
+<p>排序 若孩子的胃口大于饼干 则判断下一个饼干 若到了无饼干符合（j&#x3D;&#x3D;n）则结束</p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">findContentChildren</span><span class="params">(<span class="type">int</span>[] g, <span class="type">int</span>[] s)</span> &#123;</span><br><span class="line">        Arrays.sort(g);</span><br><span class="line">        Arrays.sort(s);</span><br><span class="line">        <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> g.length, n = s.length;</span><br><span class="line">        <span class="type">int</span> <span class="variable">res</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>,j=<span class="number">0</span>;i&lt;m&amp;&amp;j&lt;n;i++,j++)&#123;</span><br><span class="line">            <span class="keyword">while</span>(j&lt;n&amp;&amp;g[i]&gt;s[j]) j++;</span><br><span class="line">            <span class="keyword">if</span>(j&lt;n) res++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="435-Non-overlapping-Intervals"><a href="#435-Non-overlapping-Intervals" class="headerlink" title="435. Non-overlapping Intervals"></a>435. <a class="link"   href="https://leetcode-cn.com/problems/non-overlapping-intervals/" >Non-overlapping Intervals <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></h3><p>Difficulty: <strong>Medium</strong></p>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line">--wait</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="605-Can-Place-Flowers"><a href="#605-Can-Place-Flowers" class="headerlink" title="605. Can Place Flowers"></a>605. <a class="link"   href="https://leetcode-cn.com/problems/can-place-flowers/" >Can Place Flowers <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></h3><p>Difficulty: <strong>Easy</strong></p>
+<blockquote>
+<p>跳格子法 </p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">canPlaceFlowers</span><span class="params">(<span class="type">int</span>[] flowerbed, <span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> flowerbed.length;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len&amp;&amp;n&gt;<span class="number">0</span>;)&#123;</span><br><span class="line">            <span class="keyword">if</span>(flowerbed[i]==<span class="number">1</span>)&#123;</span><br><span class="line">                i+=<span class="number">2</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(i==len-<span class="number">1</span>||flowerbed[i+<span class="number">1</span>]==<span class="number">0</span>)&#123;</span><br><span class="line">                n--;</span><br><span class="line">                i+=<span class="number">2</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                i+=<span class="number">3</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> n&lt;=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>Greedy</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL进阶-引擎</title>
+    <url>/2023/09/09/MySQL/INNODB%E5%BC%95%E6%93%8E/</url>
+    <content><![CDATA[<h3 id="1-逻辑结构"><a href="#1-逻辑结构" class="headerlink" title="1.逻辑结构"></a>1.逻辑结构</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.jpg"
+                      alt="image"
+                ></p>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>班长竞选</title>
+    <url>/2023/09/09/Some%20to%20say/%E7%8F%AD%E9%95%BF%E7%AB%9E%E9%80%89/</url>
+    <content><![CDATA[<p>1.尊敬的各位老师亲爱的同学们大家上午好，首先十分感谢学院能给我这次参与竞选班干部的机会。今天我要竞选的职位是班长。<br>2.我的演讲讲分为以下三部分 自我介绍 个人看法与工作计划 我的优势<br>3.首先简单做个自我介绍，我叫比鹏飞，年龄22岁，来自山东济南。大二时从数学系转专业到计算机，从此走上不归路。前几年计算机是宇宙机，现在是不是变成生化环计了。开玩笑归开玩笑，我对编程还是有兴趣的，对技术保持热爱。这是大学期间一些我的实践经历与比较水的奖我也就不多说了吧。<br>4.下面我要谈谈我对于班长的认识。</p>
+<ul>
+<li>首先，作为班长，要以身作则。不仅要对自己负责，更要对班级同学们负责。对于班级的事务活动，要尽职尽责，合理协调安排。其次，积极的维护班级荣誉，我们是一个集体，班长要促进班级和谐团结。为大家创造一个良好的学习环境。</li>
+<li>扮演好同学与老师之间沟通桥梁的角色，善于倾听同学的声音和意见，并及时的反馈给老师和学院。</li>
+<li><hr>
+</li>
+</ul>
+<p>5.具体说说我会怎么做呢</p>
+<ul>
+<li>最重要的就是服务群众，为同学们争取便利。我会提高处理班级事务的效率，在一些无关紧要的事情上，尽量节约大家的时间。</li>
+<li>适当的交际活动我觉得是必要的，能认识更多有趣的人，有利于同学们的全面发展。</li>
+<li>再就是要对学院做出贡献，建设学院。同学们的学术成绩是学院进步发展的关键，这需要大家的共同努力。<br>6.最后，请允许我尬吹一下个人优势。123 暑期语言班担任五班班长 与老师和同学相处的很愉快 我对自己的表现还算满意吧<br>7.最后的最后。我想说，当下的环境大家也都有所了解，不过也不用过于焦虑，毕竟计算机通信，瘦死的骆驼比马大。在电影长安三万里中，年轻的李白有生当如此盛世当为大鹏的雄心壮志。最后也只能感叹个人的努力在时代大势面前，就像一盘散沙，本就如沧海一粟。我们每一位同学的心中都有各自想去到的远方，请大家务必相信自己，坚定自己的选择，坚持走下去。我衷心祝愿大家两年之后都能遇到一个更好的自己。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Self</category>
+      </categories>
+      <tags>
+        <tag>Fight</tag>
       </tags>
   </entry>
 </search>
