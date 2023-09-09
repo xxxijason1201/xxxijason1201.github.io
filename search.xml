@@ -105,6 +105,21 @@
 </blockquote>
 </li>
 </ul>
+<p>联合索引，一定要扯最左匹配!</p>
+<h4 id="最左匹配"><a href="#最左匹配" class="headerlink" title="最左匹配"></a>最左匹配</h4><p>所谓最左原则指的就是如果你的 SQL 语句中用到了联合索引中的最左边的索引，那么这条 SQL 语句就可以利用这个联合索引去进行匹配，值得注意的是，当遇到范围查询(&gt;、&lt;、between、like)就会停止匹配。<br>假设，我们对(a,b)字段建立一个索引，也就是说，你where后条件为</p>
+<p>a &#x3D; 1<br>a &#x3D; 1 and b &#x3D; 2<br>是可以匹配索引的。但是要注意的是~你执行</p>
+<p>b&#x3D; 2 and a &#x3D;1<br>也是能匹配到索引的，因为Mysql有优化器会自动调整a,b的顺序与索引顺序一致。<br>相反的，你执行</p>
+<p>b &#x3D; 2<br>就匹配不到索引了。<br>而你对(a,b,c,d)建立索引,where后条件为</p>
+<p>a &#x3D; 1 and b &#x3D; 2 and c &gt; 3 and d &#x3D; 4<br>那么，a,b,c三个字段能用到索引，而d就匹配不到。因为遇到了<code>范围查询</code>！</p>
+<p>最左匹配的原理？<br>假设，我们对(a,b)字段建立索引，那么入下图所示<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D.jpg"
+                      alt="alt"
+                ></p>
+<p>如图所示他们是按照a来进行排序，在a相等的情况下，才按b来排序。</p>
+<p>因此，我们可以看到a是有序的1，1，2，2，3，3。而b是一种全局无序，局部相对有序状态!<br>什么意思呢？<br>从全局来看，b的值为1，2，1，4，1，2，是无序的，因此直接执行b &#x3D; 2这种查询条件没有办法利用索引。</p>
+<p>从局部来看，当a的值确定的时候，b是有序的。例如a &#x3D; 1时，b值为1，2是有序的状态。当a&#x3D;2时候，b的值为1,4也是有序状态。<br>因此，你执行a &#x3D; 1 and b &#x3D; 2是a,b字段能用到索引的。而你执行a &gt; 1 and b &#x3D; 2时，a字段能用到索引，b字段用不到索引。因为a的值此时是一个范围，不是固定的，在这个范围内b值不是有序的，因此b字段用不上索引。<br>综上所示，最左匹配原则，在遇到范围查询的时候，就会停止匹配。</p>
 <h3 id="4-性能分析"><a href="#4-性能分析" class="headerlink" title="4.性能分析"></a>4.性能分析</h3><h4 id="4-1-查看执行频次"><a href="#4-1-查看执行频次" class="headerlink" title="4.1 查看执行频次"></a>4.1 查看执行频次</h4><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> status <span class="keyword">like</span> <span class="string">&#x27;Com_______&#x27;</span>;</span><br></pre></td></tr></table></figure></div>
 
 <h4 id="4-2-慢查询日志"><a href="#4-2-慢查询日志" class="headerlink" title="4.2 慢查询日志"></a>4.2 慢查询日志</h4><p>定位sql语句进行优化</p>
@@ -423,6 +438,40 @@
       </categories>
       <tags>
         <tag>Fight</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL进阶-SQL优化</title>
+    <url>/2023/09/09/MySQL/SQL%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<h3 id="1-插入优化"><a href="#1-插入优化" class="headerlink" title="1.插入优化"></a>1.插入优化</h3><ul>
+<li>多条插入</li>
+<li>手动开启事务</li>
+<li>主键顺序插入</li>
+<li>大量插入数据时 采用load指令 加载sql文件</li>
+</ul>
+<h3 id="2-主键优化"><a href="#2-主键优化" class="headerlink" title="2.主键优化"></a>2.主键优化</h3><ul>
+<li>主键长度小</li>
+<li>主键有序</li>
+<li>主键不要修改</li>
+<li></li>
+</ul>
+<h3 id="3-Order-by优化"><a href="#3-Order-by优化" class="headerlink" title="3.Order by优化"></a>3.Order by优化</h3><ul>
+<li>filesort 查出数据后重新排序 慢</li>
+<li>index 利用索引 较快<blockquote>
+<p>可以根据需求 添加索引时指定升序还是降序 order的时候就会是用index 否则还是会filesort<br>必须是覆盖查询 否则还是要回表 use filesort<br>最左法则</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="4-group-by优化"><a href="#4-group-by优化" class="headerlink" title="4.group by优化"></a>4.group by优化</h3><ul>
+<li>利用索引 且满足最左法则 则不会走临时表 原因：回到联合索引 首先根据第一个字段排序 然后根据第二个字段排排序 但是直接按第二个字段分组时 他们顺序是乱的 需要排序 就会用到临时表 如果先用第一个字段索引找到 第二个自然就是有序的了 顺序下去能够算出count了</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JAVA</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
       </tags>
   </entry>
 </search>
