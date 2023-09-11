@@ -13,17 +13,22 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/page/2/"/>
+    <link rel="canonical" href="http://example.com/2023/09/10/mysql/日志/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/page/2/index.html">
+        <meta name="description" content="1.错误日志当数据库出现错误时，错误日志会记录下来，通过错误日志可以分析出错误的原因。 2.binlogbinlog是二进制日志文件，记录了数据库所有的DDL和DML语句（除select）可以记录某一行数据变化前后的值，也可以记录某一行数据的变化过程（sql语句）作用：  数据恢复 主从复制主从复制过程 主库将数据库中数据的变化写入到 binlog从库连接主库从库会创建一个 I&#x2F;O 线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL运维-">
+<meta property="og:url" content="http://example.com/2023/09/10/MySQL/%E6%97%A5%E5%BF%97/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.错误日志当数据库出现错误时，错误日志会记录下来，通过错误日志可以分析出错误的原因。 2.binlogbinlog是二进制日志文件，记录了数据库所有的DDL和DML语句（除select）可以记录某一行数据变化前后的值，也可以记录某一行数据的变化过程（sql语句）作用：  数据恢复 主从复制主从复制过程 主库将数据库中数据的变化写入到 binlog从库连接主库从库会创建一个 I&#x2F;O 线程">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-10T11:39:25.748Z">
+<meta property="article:modified_time" content="2023-09-10T11:54:42.757Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
     
     
@@ -35,6 +40,8 @@
     <!--- Page Info-->
     
     <title>
+        
+            MySQL运维- -
         
         Jason&#39;s Home
     </title>
@@ -115,39 +122,6 @@
 <main class="page-container" id="swup">
 
     
-        <style>
-    .home-article-item,
-    .sidebar-links,
-    .sidebar-content,
-    a.page-number,
-    a.extend,
-    .sidebar-links .links:hover,
-    .right-bottom-tools,
-    footer.footer {
-        background-color: var(--background-color-transparent-80) !important;
-    }
-    .right-bottom-tools:hover,
-    a.page-number:hover,
-    a.extend:hover {
-        background-color: var(--primary-color) !important;
-    }
-    .site-info,
-    .home-article-sticky-label {
-        background-color: var(--background-color-transparent-15) !important;
-    }
-    .home-article-sticky-label {
-        backdrop-filter: none !important;
-    }
-    .home-banner-background {
-        filter: blur(15px);
-    }
-</style>
-
-<div class="home-banner-background">
-</div>
-
-
-    
 
     <div class="main-content-container">
 
@@ -159,9 +133,9 @@
         <div class="left">
             
             <a class="logo-title" href="http://example.com/">
-                <h1>
+                
                 Jason&#39;s Home
-                </h1>
+                
             </a>
         </div>
 
@@ -173,7 +147,7 @@
                         
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active" 
+                                <a class="" 
                                     href="/"  >
                                     
                                         
@@ -275,7 +249,7 @@
             
                 
                     <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
-                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group active" 
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
                         href="/"  >
                              
                                 
@@ -366,623 +340,266 @@
             <div class="main-content">
 
                 
-                    <div class="home-content-container">
-    <ul class="home-article-list">
-        
-            <li class="home-article-item">
+                    <div class="post-page-container">
+    <div class="article-content-container">
 
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/08/MySQL/%E9%94%81/">
-                            <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-锁" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/08/MySQL/%E9%94%81/">
-                        MySQL进阶-锁
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Fri Sep 08 2023 16:09:12 GMT+0800">
-                
-                    2023-09-08
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/08/MySQL/%E9%94%81/">Read more<span class="seo-reader-text">MySQL进阶-锁</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
-                            <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-存储过程" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
-                        MySQL进阶-存储过程
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Sep 07 2023 21:16:38 GMT+0800">
-                
-                    2023-09-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">Read more<span class="seo-reader-text">MySQL进阶-存储过程</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/">
-                            <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-视图" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/">
-                        MySQL进阶-视图
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Sep 07 2023 17:50:02 GMT+0800">
-                
-                    2023-09-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/">Read more<span class="seo-reader-text">MySQL进阶-视图</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/07/Some%20to%20say/dis_break_01/">
-                            <img src="https://w.wallhaven.cc/full/j3/wallhaven-j3g7yy.jpg" alt="奔赴" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/07/Some%20to%20say/dis_break_01/">
-                        奔赴
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Sep 07 2023 15:33:46 GMT+0800">
-                
-                    2023-09-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/Self/">Self</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/Self/">Self</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/07/Some%20to%20say/dis_break_01/">Read more<span class="seo-reader-text">奔赴</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/07/MySQL/%E7%B4%A2%E5%BC%95/">
-                            <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-索引" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/07/MySQL/%E7%B4%A2%E5%BC%95/">
-                        MySQL进阶-索引
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Thu Sep 07 2023 12:07:02 GMT+0800">
-                
-                    2023-09-07
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/07/MySQL/%E7%B4%A2%E5%BC%95/">Read more<span class="seo-reader-text">MySQL进阶-索引</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-            <li class="home-article-item">
-
-                
-                    <div class="absolute top-[12px] right-[12px] text-[0.7rem] text-third-text-color rounded-medium bg-background-color-transparent-15 py-[2px] px-[10px] border border-border-color z-1 hover:text-first-text-color cursor-default">
-                        <i class="fa-regular fa-thumbtack mr-[3px] text-[0.65rem]"></i>Sticky
-                    </div>
-                
-
-                
-                    
-                
-
-                
-                    <div id="home-article-thumbnail" class="relative h-[150px] overflow-hidden rounded-t-[10.8px] md:rounded-t-large -m-5 mb-3 sm:-m-6 sm:mb-4 md:-m-7 md:mb-5">
-                        <a href="/2023/09/06/MySQL/MVCC/">
-                            <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL进阶-MVCC" class="w-full h-full object-cover dark:brightness-75 transition-all" />
-                        </a>
-                    </div>
-                
-
-                <h3 class="home-article-title">
-                    <a href="/2023/09/06/MySQL/MVCC/">
-                        MySQL进阶-MVCC
-                    </a>
-                </h3>
-
-                <div class="home-article-content markdown-body">
-                    
-                        <p>RR&#x2F;RC隔离机制与MVCC</p>
-
-                    
-                </div>
-
-                <div class="home-article-meta-info-container">
-    <div class="home-article-meta-info">
-        <span><i class="fa-solid fa-calendars"></i>&nbsp;
-            <span class="home-article-date" data-date="Wed Sep 06 2023 10:54:46 GMT+0800">
-                
-                    2023-09-06
-                
-            </span>
-        </span>
-        
-            <span class="home-article-category">
-                <i class="fa-solid fa-folders"></i>&nbsp;
-            <ul>
-                
-                
-                    
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
-                        </li>
-                    
-                    
-                
-                    
-                        
-                            <li>></li>
-                        
-                        <li>
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                    
-                
-            </ul>
-        </span>
-        
-        
-            <span class="home-article-tag">
-                <i class="fa-solid fa-tags"></i>&nbsp;
-                <ul>
-                    
-                        <li>
-                            
-                            <a href="/tags/MySQL/">MySQL</a>&nbsp;
-                        </li>
-                    
-                </ul>
-            </span>
-        
-    </div>
-
-    <a href="/2023/09/06/MySQL/MVCC/">Read more<span class="seo-reader-text">MySQL进阶-MVCC</span>&nbsp;<i class="fa-solid fa-angle-right"></i></a>
-</div>
-
-            </li>
-        
-    </ul>
-
-    <div class="home-paginator">
-        <div class="paginator">
-    <a class="extend prev" rel="prev" href="/"><i class="fa-regular fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
-</div>
-
-    </div>
-</div>
-
-                    <div class="comment-container pjax"></div>
-                
-
-            </div>
-
+        <div class="article-title">
             
-                <div class="home-sidebar-container">
-    <div class="sticky-container">
+                
+                
+                <img src="https://w.wallhaven.cc/full/o5/wallhaven-o5jy17.jpg" alt="MySQL运维-" class="max-w-none"/>
+                
+                <h1 class="article-title-cover">MySQL运维-</h1>
+            
+            </div>
+            
+                    
         
-            <div class="sidebar-content">
+        
+            <div class="article-header">
                 <div class="avatar">
                     <img src="/images/avatar.jpg">
                 </div>
-                <div class="author">
-                    <div class="name">Jason Be</div>
-                    
-                        <div class="label">Lv3</div>
-                    
-                </div>
-                <div class="statistics">
-                    <a class="item" href="/tags">
-                        <div class="number">5</div>
-                        <div class="label">Tags</div>
-                    </a>
-                    <a class="item" href="/categories">
-                        <div class="number">6</div>
-                        <div class="label">Categories</div>
-                    </a>
-                    <a class="item" href="/archives">
-                        <div class="number">16</div>
-                        <div class="label">Posts</div>
-                    </a>
-                </div>
-            </div>
-            
-                <div class="sidebar-links"   marginTop >
-                    <div class="site-info">
-                        <div class="site-name">Jason&#39;s Home</div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Jason Be</span>
+                        
+                            <span class="author-label">Lv3</span>
                         
                     </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-10 19:39:25</span>
+        <span class="mobile">2023-09-10 19:39:25</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-10 19:54:42</span>
+            <span class="mobile">2023-09-10 19:54:42</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
                     
                         
-                            
-                                <a class="links" href="/archives">
-                                    
-                                        <i class="fa-regular fa-archive icon-space"></i>
-                                    
-                                    <span class="link-name">Archives</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/tags">
-                                    
-                                        <i class="fa-regular fa-tags icon-space"></i>
-                                    
-                                    <span class="link-name">Tags</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/categories">
-                                    
-                                        <i class="fa-regular fa-folder icon-space"></i>
-                                    
-                                    <span class="link-name">Categories</span>
-                                </a>
-                            
-                        
-                            
-                                <a class="links" href="/masonry">
-                                    
-                                        <i class="fa-solid fa-image icon-space"></i>
-                                    
-                                    <span class="link-name">Photos</span>
-                                </a>
-                            
-                        
+                        <li>
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>&nbsp;
+                        </li>
                     
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/MySQL/">MySQL</a>&nbsp;
+                        </li>
+                    
+                    
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/MySQL/">MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>297 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
+    
+</div>
+
+                    </div>
                 </div>
-            
+            </div>
         
+
+        
+
+
+        <div class="article-content markdown-body">
+            <h3 id="1-错误日志"><a href="#1-错误日志" class="headerlink" title="1.错误日志"></a>1.错误日志</h3><p>当数据库出现错误时，错误日志会记录下来，通过错误日志可以分析出错误的原因。</p>
+<h3 id="2-binlog"><a href="#2-binlog" class="headerlink" title="2.binlog"></a>2.binlog</h3><p>binlog是二进制日志文件，记录了数据库所有的DDL和DML语句（除select）<br>可以记录某一行数据变化前后的值，也可以记录某一行数据的变化过程（sql语句）<br>作用：</p>
+<ul>
+<li>数据恢复</li>
+<li>主从复制<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-thin"></i><p>主从复制过程</p>
+</div><div class="notel-content"><p>主库将数据库中数据的变化写入到 binlog从库连接主库从库会创建一个 I&#x2F;O 线程向主库请求更新的 binlog主库会创建一个 binlog dump 线程来发送 binlog ，从库中的 I&#x2F;O 线程负责接收从库的 I&#x2F;O 线程将接收的 binlog 写入到 relay log 中。从库的 SQL 线程读取 relay log 同步数据本地（也就是再执行一遍 SQL ）。</p>
+</div></div></li>
+</ul>
+<div class="note default"><p>DDL: create,drop,alter 操作表结构<br>DML：insert,update,delete 操作表数据</p>
+</div>
+
+<h3 id="3-查询日志"><a href="#3-查询日志" class="headerlink" title="3.查询日志"></a>3.查询日志</h3><p>记录数据所有操作sql语句</p>
+<h3 id="4-慢查询日志"><a href="#4-慢查询日志" class="headerlink" title="4.慢查询日志"></a>4.慢查询日志</h3><p>慢查询日志记录了所有执行时间超过long_query_time秒的sql语句 效率比较低的语句</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> MySQL运维-</li>
+        <li><strong>Author:</strong> Jason Be</li>
+        <li><strong>Created at
+                :</strong> 2023-09-10 19:39:25</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2023-09-10 19:54:42
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://xxxijason1201.github.io/2023/09/10/MySQL/日志/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+            This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+            
+
+        </li>
+    </ul>
+</div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/MySQL/">#MySQL</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/10/JAVA/%E9%9B%86%E5%90%88/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">集合基操</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://waline-xxxijason.6eek.net',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">MySQL运维-</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97"><span class="nav-text">1.错误日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-binlog"><span class="nav-text">2.binlog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-text">3.查询日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%85%A2%E6%9F%A5%E8%AF%A2%E6%97%A5%E5%BF%97"><span class="nav-text">4.慢查询日志</span></a></li></ol>
 
     </div>
 </div>
+        </div>
+    
+</div>
+
+
+
+                
+
+            </div>
 
             
 
@@ -1051,6 +668,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">
@@ -1175,7 +813,6 @@
     //     document.addEventListener("DOMContentLoaded", () => init());
     // }
 </script>
-
 
 
 
