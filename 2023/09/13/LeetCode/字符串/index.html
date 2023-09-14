@@ -19,15 +19,17 @@
     <meta name="revisit-after" content="1 days">
     
         <meta property="og:type" content="article">
-<meta property="og:title" content="字符串">
+<meta property="og:title" content="字符串and 数组">
 <meta property="og:url" content="http://example.com/2023/09/13/LeetCode/%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/238.png">
 <meta property="article:published_time" content="2023-09-13T12:10:10.848Z">
-<meta property="article:modified_time" content="2023-09-13T12:31:02.063Z">
+<meta property="article:modified_time" content="2023-09-14T10:46:21.444Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="字符串">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/238.png">
     
     
     <!--- Icon Part-->
@@ -39,7 +41,7 @@
     
     <title>
         
-            字符串 -
+            字符串and 数组 -
         
         Jason&#39;s Universe 🛸
     </title>
@@ -347,9 +349,9 @@
             
                 
                 
-                <img src="https://w.wallhaven.cc/full/0j/wallhaven-0jvzy5.jpg" alt="字符串" class="max-w-none"/>
+                <img src="https://w.wallhaven.cc/full/0j/wallhaven-0jvzy5.jpg" alt="字符串and 数组" class="max-w-none"/>
                 
-                <h1 class="article-title-cover">字符串</h1>
+                <h1 class="article-title-cover">字符串and 数组</h1>
             
             </div>
             
@@ -378,8 +380,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-09-13 20:31:02</span>
-            <span class="mobile">2023-09-13 20:31:02</span>
+            <span class="desktop">2023-09-14 18:46:21</span>
+            <span class="mobile">2023-09-14 18:46:21</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -417,12 +419,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>94 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>562 Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>3 Mins</span>
         </span>
     
     
@@ -441,7 +443,30 @@
 
 
         <div class="article-content markdown-body">
-            <h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseWords</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=len-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s.charAt(i)==<span class="string">&#x27; &#x27;</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> i+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(i&gt;=<span class="number">0</span>&amp;&amp;s.charAt(i)!=<span class="string">&#x27; &#x27;</span>) i--;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> i+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=start;j&lt;end;j++)&#123;</span><br><span class="line">                sb.append(s.charAt(j));</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+            <h3 id="151-翻转字符串里的单词"><a href="#151-翻转字符串里的单词" class="headerlink" title="151. 翻转字符串里的单词"></a>151. 翻转字符串里的单词</h3><blockquote>
+<p>从后向前遍历 遇到空格就跳 设置两个指针 包括有效字符串  StringBuilder 的使用</p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseWords</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=len-<span class="number">1</span>;i&gt;=<span class="number">0</span>;i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(s.charAt(i)==<span class="string">&#x27; &#x27;</span>) <span class="keyword">continue</span>;</span><br><span class="line">            <span class="type">int</span> <span class="variable">end</span> <span class="operator">=</span> i+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(i&gt;=<span class="number">0</span>&amp;&amp;s.charAt(i)!=<span class="string">&#x27; &#x27;</span>) i--;</span><br><span class="line">            <span class="type">int</span> <span class="variable">start</span> <span class="operator">=</span> i+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=start;j&lt;end;j++)&#123;</span><br><span class="line">                sb.append(s.charAt(j));</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sb.deleteCharAt(sb.length()-<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="238-除自身以外数组的乘积"><a href="#238-除自身以外数组的乘积" class="headerlink" title="238. 除自身以外数组的乘积"></a>238. 除自身以外数组的乘积</h3><blockquote>
+<p>方法一 </p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] productExceptSelf(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span> R[] = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="type">int</span> L[] = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="type">int</span> res[] = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        <span class="comment">//L[i]表示i左侧的乘积</span></span><br><span class="line">        <span class="comment">// R[i]表示i右侧的乘积</span></span><br><span class="line">        L[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line">            L[i] = L[i-<span class="number">1</span>]*nums[i-<span class="number">1</span>]; </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        R[len-<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> len-<span class="number">2</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">            R[j] = R[j+<span class="number">1</span>]*nums[j+<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">           res[i] = R[i]*L[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<blockquote>
+<p>方法二 处理右侧乘积时 不用再存数组了 直接累乘</p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] productExceptSelf(<span class="type">int</span>[] nums) &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> nums.length;</span><br><span class="line">        <span class="type">int</span> answer[] = <span class="keyword">new</span> <span class="title class_">int</span>[len];</span><br><span class="line">        answer[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> temp=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;len;i++)&#123;</span><br><span class="line">                answer[i] = answer[i-<span class="number">1</span>]*nums[i-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=len-<span class="number">2</span>;j&gt;=<span class="number">0</span>;j--)&#123;</span><br><span class="line">            temp*=nums[j+<span class="number">1</span>];</span><br><span class="line">            answer[j]*=temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> answer;</span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/238.png"
+                      alt="Alt text"
+                ></p>
+<h3 id="345-反转字符串中的元音字母"><a href="#345-反转字符串中的元音字母" class="headerlink" title="345. 反转字符串中的元音字母"></a>345. 反转字符串中的元音字母</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">reverseVowels</span><span class="params">(String s)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> s.length();</span><br><span class="line">        <span class="type">char</span>[] arr = s.toCharArray();</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> j=len-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j) &#123;</span><br><span class="line">            <span class="keyword">while</span>(i&lt;len &amp;&amp; !isyuan(arr[i])) i++;</span><br><span class="line">            <span class="keyword">while</span>(!isyuan(arr[j])&amp;&amp;j&gt;<span class="number">0</span>) j--;   <span class="comment">//注意这里的判断边界 </span></span><br><span class="line">            <span class="keyword">if</span>(i&lt;j)&#123;   <span class="comment">////注意这里的判断边界    i可能跑到j后面去 </span></span><br><span class="line">            <span class="type">char</span> <span class="variable">t</span> <span class="operator">=</span> arr[i];</span><br><span class="line">            arr[i]=arr[j];</span><br><span class="line">            arr[j]=t;</span><br><span class="line">            i++;</span><br><span class="line">            j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>(arr);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isyuan</span><span class="params">(<span class="type">char</span> c)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;aeiouAEIOU&quot;</span>.indexOf(c)&gt;=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compress</span><span class="params">(<span class="type">char</span>[] chars)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> chars.length;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;len;i++)&#123;</span><br><span class="line">            <span class="type">char</span> <span class="variable">temp</span> <span class="operator">=</span> chars[i];</span><br><span class="line">            <span class="type">int</span> j=i+<span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> count=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span>(j&lt;len)&#123;</span><br><span class="line">                <span class="keyword">if</span>(temp==chars[j]) &#123;</span><br><span class="line">                    j++;</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(temp);</span><br><span class="line">            <span class="keyword">if</span>(count&lt;<span class="number">10</span>&amp;&amp;count!=<span class="number">1</span>) sb.append((<span class="type">char</span>)count);</span><br><span class="line">            <span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="type">int</span> t=<span class="number">0</span>;</span><br><span class="line">               <span class="type">String</span> <span class="variable">strcount</span> <span class="operator">=</span> count+<span class="string">&quot;&quot;</span>; </span><br><span class="line">               <span class="keyword">while</span>(t&lt;strcount.length())&#123;</span><br><span class="line">                   sb.append(strcount.charAt(t));</span><br><span class="line">                   t++;</span><br><span class="line">               &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.length();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
 
         </div>
 
@@ -449,14 +474,14 @@
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> 字符串</li>
+        <li><strong>Title:</strong> 字符串and 数组</li>
         <li><strong>Author:</strong> Jason</li>
         <li><strong>Created at
                 :</strong> 2023-09-13 20:10:10</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2023-09-13 20:31:02
+                    :</strong> 2023-09-14 18:46:21
             </li>
         
         <li>
@@ -564,8 +589,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">字符串</div>
-        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D"><span class="nav-text">151. 翻转字符串里的单词</span></a></li></ol>
+        <div class="page-title">字符串and 数组</div>
+        <ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#151-%E7%BF%BB%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%87%8C%E7%9A%84%E5%8D%95%E8%AF%8D"><span class="nav-text">151. 翻转字符串里的单词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#238-%E9%99%A4%E8%87%AA%E8%BA%AB%E4%BB%A5%E5%A4%96%E6%95%B0%E7%BB%84%E7%9A%84%E4%B9%98%E7%A7%AF"><span class="nav-text">238. 除自身以外数组的乘积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#345-%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%85%83%E9%9F%B3%E5%AD%97%E6%AF%8D"><span class="nav-text">345. 反转字符串中的元音字母</span></a></li></ol>
 
     </div>
 </div>
