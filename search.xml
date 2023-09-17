@@ -25,138 +25,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JVM-GC-概述及算法</title>
-    <url>/2023/09/11/JVM/GC-%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h1 id="1-垃圾回收算法"><a href="#1-垃圾回收算法" class="headerlink" title="1. 垃圾回收算法"></a>1. 垃圾回收算法</h1><h2 id="1-1-标记阶段"><a href="#1-1-标记阶段" class="headerlink" title="1.1 标记阶段"></a>1.1 标记阶段</h2><p>判断对象存活一般有两种方式：引用计数算法和可达性分析算法。</p>
-<h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><p>引用计数算法（Reference Counting）比较简单，对每个对象保存一个整型的引用计数器属性。用于记录对象被引用的情况。<br>对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1；当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，即表示对象A不可能再被使用，可进行回收。</p>
-<blockquote>
-<p>优点：实现简单，垃圾对象便于辨识；判定效率高，回收没有延迟性。</p>
-</blockquote>
-<blockquote>
-<p>缺点：</p>
-<ul>
-<li>它需要单独的字段存储计数器，这样的做法增加了存储空间的开销。</li>
-<li>每次赋值都需要更新计数器，伴随着加法和减法操作，这增加了时间开销。</li>
-<li>用计数器有一个严重的问题，即无法处理<code>循环引用</code>的情况。这是一条致命缺陷，导致在Java的垃圾回收器中没有使用这类算法。</li>
-</ul>
-</blockquote>
-<h3 id="可达性分析算法（根搜索算法、追踪性垃圾收集）"><a href="#可达性分析算法（根搜索算法、追踪性垃圾收集）" class="headerlink" title="可达性分析算法（根搜索算法、追踪性垃圾收集）"></a>可达性分析算法（根搜索算法、追踪性垃圾收集）</h3><p>基本思路</p>
-<blockquote>
-<p>可达性分析算法是以根对象集合（GCRoots）为起始点，按照从上至下的方式搜索被根对象集合所连接的目标对象是否可达。<br>使用可达性分析算法后，内存中的存活对象都会被根对象集合直接或间接连接着，搜索所走过的路径称为引用链（Reference Chain）<br>如果目标对象没有任何引用链相连，则是不可达的，就意味着该对象己经死亡，可以标记为垃圾对象。<br>在可达性分析算法中，只有能够被根对象集合直接或者间接连接的对象才是存活对象。</p>
-</blockquote>
-<h3 id="GC-Roots包括以下几类元素："><a href="#GC-Roots包括以下几类元素：" class="headerlink" title="GC Roots包括以下几类元素："></a>GC Roots包括以下几类元素：</h3><ul>
-<li>虚拟机栈中引用的对象 比如：各个线程被调用的方法中使用到的参数、局部变量等。</li>
-<li>本地方法栈内JNI（通常说的本地方法）引用的对象</li>
-<li>方法区中类静态属性引用的对象  比如：Java类的引用类型静态变量</li>
-<li>方法区中常量引用的对象 比如：字符串常量池（String Table）里的引用</li>
-<li>所有被同步锁synchronized持有的对象</li>
-<li>Java虚拟机内部的引用。 基本数据类型对应的Class对象，一些常驻的异常对象（如：NullPointerException、OutOfMemoryError），系统类加载器。</li>
-<li>反映java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等。</li>
-</ul>
-<p>除了这些固定的GC Roots集合以外，根据用户所选用的垃圾收集器以及当前回收的内存区域不同，还可以有其他对象“临时性”地加入，共同构成完整GC Roots集合。比如：分代收集和局部回收（PartialGC）。</p>
-<p>如果只针对Java堆中的某一块区域进行垃圾回收（比如：典型的只针对新生代），必须考虑到内存区域是虚拟机自己的实现细节，更不是孤立封闭的，这个区域的对象完全有可能被其他区域的对象所引用，这时候就需要一并将关联的区域对象也加入GCRoots集合中去考虑，才能保证可达性分析的准确性。</p>
-<p>小技巧：由于Root采用栈方式存放变量和指针，所以如果一个指针，它保存了堆内存里面的对象，但是自己又不存放在堆内存里面，那它就是一个Root。</p>
-<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-thin"></i><p>注意</p>
-</div><div class="notel-content"><p>如果要使用可达性分析算法来判断内存是否可回收，那么分析工作必须在一个能保障一致性的快照中进行。这点不满足的话分析结果的准确性就无法保证。<br>这点也是导致GC进行时必须“stop The World”的一个重要原因。<br>即使是号称（几乎）不会发生停顿的CMS收集器中，枚举根节点时也是必须要停顿的。</p>
-</div></div>
-
-<h2 id="1-2-对象的finalization机制"><a href="#1-2-对象的finalization机制" class="headerlink" title="1.2 对象的finalization机制"></a>1.2 对象的finalization机制</h2><p>Java语言提供了对象终止（finalization）机制来允许开发人员提供对象被销毁之前的自定义处理逻辑。</p>
-<p>当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的finalize()方法。</p>
-<p>finalize() 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
-<p>永远不要主动调用某个对象的finalize()方法I应该交给垃圾回收机制调用。理由包括下面三点：</p>
-<ul>
-<li>在finalize()时可能会导致对象复活。</li>
-<li>finalize()方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则finalize()方法将没有执行机会。</li>
-<li>一个糟糕的finalize()会严重影响Gc的性能。</li>
-</ul>
-<p>从功能上来说，finalize()方法与C中的析构函数比较相似，但是Java采用的是基于垃圾回收器的自动内存管理机制，所以finalize()方法在本质上不同于C中的析构函数。</p>
-<p>由于finalize()方法的存在，虚拟机中的对象一般处于三种可能的状态。</p>
-<h4 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h4><p>如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，定义虚拟机中的对象可能的三种状态。如下：</p>
-<ul>
-<li>可触及的：从根节点开始，可以到达这个对象。</li>
-<li>可复活的：对象的所有引用都被释放，但是对象有可能在finalize()中复活。</li>
-<li>不可触及的：对象的finalize()被调用，并且没有复活，那么就会进入不可触及状态。不可触及的对象不可能被复活，因为finalize()只会被调用一次。</li>
-</ul>
-<p>以上3种状态中，是由于finalize()方法的存在，进行的区分。只有在对象不可触及时才可以被回收。</p>
-<h4 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h4><p>判定一个对象objA是否可回收，至少要经历两次标记过程：</p>
-<ol>
-<li>如果对象objA到GC Roots没有引用链，则进行第一次标记。</li>
-<li>进行筛选，判断此对象是否有必要执行finalize()方法</li>
-<li>如果对象objA没有重写finalize()方法，或者finalize()方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，objA被判定为不可触及的。</li>
-<li>如果对象objA重写了finalize()方法，且还未执行过，那么objA会被插入到F-Queue队列中，由一个虚拟机自动创建的、低优先级的Finalizer线程触发其finalize()方法执行。</li>
-<li>finalize()方法是对象逃脱死亡的最后机会，稍后GC会对F-Queue队列中的对象进行第二次标记。如果objA在finalize()方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，objA会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，finalize方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的finalize方法只会被调用一次。</li>
-</ol>
-<h2 id="1-3-清除阶段"><a href="#1-3-清除阶段" class="headerlink" title="1.3 清除阶段"></a>1.3 清除阶段</h2><p>目前在JVM中比较常见的三种垃圾收集算法是标记一清除算法（Mark-Sweep）、复制算法（copying）、标记-压缩算法（Mark-Compact）</p>
-<h3 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h3><h4 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h4><p>当堆中的有效内存空间（available memory）被耗尽的时候，就会停止整个程序（也被称为stop the world），然后进行两项工作，第一项则是标记，第二项则是清除</p>
-<ol>
-<li>标记：Collector从引用根节点开始遍历，标记所有被引用的对象。一般是在对象的Header中记录为可达对象。 </li>
-<li>清除：Collector对堆内存从头到尾进行线性的遍历，如果发现某个对象在其Header中没有标记为可达对象，则将其回收</li>
-</ol>
-<p>缺点</p>
-<ul>
-<li>标记清除算法的效率不算高</li>
-<li>在进行GC的时候，需要停止整个应用程序，用户体验较差</li>
-<li>这种方式清理出来的空闲内存是不连续的，产生内碎片，需要维护一个空闲列表</li>
-</ul>
-<h4 id="何为清除？"><a href="#何为清除？" class="headerlink" title="何为清除？"></a>何为清除？</h4><p>这里所谓的清除并不是真的置空，而是把需要清除的对象地址保存在空闲的地址列表里。下次有新对象需要加载时，判断垃圾的位置空间是否够，如果够，就存放覆盖原有的地址。</p>
-<h3 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h3><p>将活着的内存空间分为两块，每次只使用其中一块，在垃圾回收时将正在使用的内存中的存活对象复制到未被使用的内存块中，之后清除正在使用的内存块中的所有对象，交换两个内存的角色，最后完成垃圾回收</p>
-<p>优点</p>
-<ul>
-<li>没有标记和清除过程，实现简单，运行高效</li>
-<li>复制过去以后保证空间的连续性，不会出现“碎片”问题。</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>此算法的缺点也是很明显的，就是需要两倍的内存空间。</li>
-<li>对于G1这种分拆成为大量region的GC，复制而不是移动，意味着GC需要维护region之间对象引用关系，不管是内存占用或者时间开销也不小</li>
-</ul>
-<h3 id="标记-压缩（整理）算法"><a href="#标记-压缩（整理）算法" class="headerlink" title="标记-压缩（整理）算法"></a>标记-压缩（整理）算法</h3><p>标记-压缩算法的最终效果等同于标记-清除算法执行完成后，再进行一次内存碎片整理，因此，也可以把它称为标记-清除-压缩（Mark-Sweep-Compact）算法。</p>
-<p>优点</p>
-<ul>
-<li>消除了标记-清除算法当中，内存区域分散的缺点，我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可。</li>
-<li>消除了复制算法当中，内存减半的高额代价。</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>从效率上来说，标记-整理算法要低于复制算法。</li>
-<li>移动对象的同时，如果对象被其他对象引用，则还需要调整引用的地址</li>
-<li>移动过程中，需要全程暂停用户应用程序。即：STW</li>
-</ul>
-<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>分代收集算法，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的收集方式，以便提高回收效率。一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点使用不同的回收算法，以提高垃圾回收的效率。</p>
-<p>在Java程序运行的过程中，会产生大量的对象，其中有些对象是与业务信息相关，比如Http请求中的Session对象、线程、Socket连接，这类对象跟业务直接挂钩，因此生命周期比较长。但是还有一些对象，主要是程序运行过程中生成的临时变量，这些对象生命周期会比较短，比如：String对象，由于其不变类的特性，系统会产生大量的这些对象，有些对象甚至只用一次即可回收。<br>分代收集算法，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的收集方式，以便提高回收效率。一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点使用不同的回收算法，以提高垃圾回收的效率。</p>
-<h4 id="年轻代（Young-Gen）"><a href="#年轻代（Young-Gen）" class="headerlink" title="年轻代（Young Gen）"></a>年轻代（Young Gen）</h4><p>年轻代特点：区域相对老年代较小，对象生命周期短、存活率低，回收频繁。</p>
-<p>这种情况复制算法的回收整理，速度是最快的。复制算法的效率只和当前存活对象大小有关，因此很适用于年轻代的回收。而复制算法内存利用率不高的问题，通过hotspot中的两个survivor的设计得到缓解。</p>
-<h4 id="老年代（Tenured-Gen）"><a href="#老年代（Tenured-Gen）" class="headerlink" title="老年代（Tenured Gen）"></a>老年代（Tenured Gen）</h4><p>老年代特点：区域较大，对象生命周期长、存活率高，回收不及年轻代频繁。</p>
-<p>这种情况存在大量存活率高的对象，复制算法明显变得不合适。一般是由标记-清除或者是标记-清除与标记-整理的混合实现。</p>
-<ul>
-<li>Mark阶段的开销与存活对象的数量成正比。</li>
-<li>Sweep阶段的开销与所管理区域的大小成正相关。</li>
-<li>Compact阶段的开销与存活对象的数据成正比。</li>
-</ul>
-<p>以HotSpot中的CMS回收器为例，CMS是基于Mark-Sweep实现的，对于对象的回收效率很高。而对于碎片问题，CMS采用基于Mark-Compact算法的Serial Old回收器作为补偿措施：当内存回收不佳（碎片导致的Concurrent Mode Failure时），将采用Serial Old执行Full GC以达到对老年代内存的整理。</p>
-<h3 id="增量收集算法"><a href="#增量收集算法" class="headerlink" title="增量收集算法"></a>增量收集算法</h3><p>上述现有的算法，在垃圾回收过程中，应用软件将处于一种Stop the World的状态。在Stop the World状态下，应用程序所有的线程都会挂起，暂停一切正常的工作，等待垃圾回收的完成。如果垃圾回收时间过长，应用程序会被挂起很久，将严重影响用户体验或者系统的稳定性。为了解决这个问题，即对实时垃圾收集算法的研究直接导致了增量收集（Incremental Collecting）算法的诞生。</p>
-<h4 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h4><p>如果一次性将所有的垃圾进行处理，需要造成系统长时间的停顿，那么就可以让垃圾收集线程和应用程序线程交替执行。每次，垃圾收集线程只收集一小片区域的内存空间，接着切换到应用程序线程。依次反复，直到垃圾收集完成。</p>
-<p>总的来说，增量收集算法的基础仍是传统的标记-清除和复制算法。增量收集算法通过对线程间冲突的妥善处理，允许垃圾收集线程以分阶段的方式完成标记、清理或复制工作</p>
-<p>缺点</p>
-<p>使用这种方式，由于在垃圾回收过程中，间断性地还执行了应用程序代码，所以能减少系统的停顿时间。但是，因为线程切换和上下文转换的消耗，会使得垃圾回收的总体成本上升，造成系统吞吐量的下降。</p>
-<h3 id="分区算法"><a href="#分区算法" class="headerlink" title="分区算法"></a>分区算法</h3><p>一般来说，在相同条件下，堆空间越大，一次Gc时所需要的时间就越长，有关GC产生的停顿也越长。为了更好地控制GC产生的停顿时间，将一块大的内存区域分割成多个小块，根据目标的停顿时间，每次合理地回收若干个小区间，而不是整个堆空间，从而减少一次GC所产生的停顿。</p>
-<p>分代算法将按照对象的生命周期长短划分成两个部分，分区算法将整个堆空间划分成连续的不同小区间。</p>
-<p>每一个小区间都独立使用，独立回收。这种算法的好处是可以控制一次回收多少个小区间。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/JVM/%E5%88%86%E5%8C%BA%E7%AE%97%E6%B3%95.jpg"
-                      alt="image-20200427110606877"
-                ></p>
-]]></content>
-      <categories>
-        <category>JVM</category>
-      </categories>
-      <tags>
-        <tag>JVM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JVM-GC-回收器</title>
     <url>/2023/09/11/JVM/GC-%E5%9B%9E%E6%94%B6%E5%99%A8/</url>
     <content><![CDATA[<h1 id="1-垃圾回收器"><a href="#1-垃圾回收器" class="headerlink" title="1.垃圾回收器"></a>1.垃圾回收器</h1><h2 id="垃圾收集器分类"><a href="#垃圾收集器分类" class="headerlink" title="垃圾收集器分类"></a>垃圾收集器分类</h2><p>按线程数分，可以分为<code>串行</code>垃圾回收器和<code>并行</code>垃圾回收器。 <code>cpu</code></p>
@@ -338,6 +206,156 @@
       </tags>
   </entry>
   <entry>
+    <title>JVM-GC-概述及算法</title>
+    <url>/2023/09/11/JVM/GC-%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="1-垃圾回收算法"><a href="#1-垃圾回收算法" class="headerlink" title="1. 垃圾回收算法"></a>1. 垃圾回收算法</h1><h2 id="1-1-标记阶段"><a href="#1-1-标记阶段" class="headerlink" title="1.1 标记阶段"></a>1.1 标记阶段</h2><p>判断对象存活一般有两种方式：引用计数算法和可达性分析算法。</p>
+<h3 id="引用计数算法"><a href="#引用计数算法" class="headerlink" title="引用计数算法"></a>引用计数算法</h3><p>引用计数算法（Reference Counting）比较简单，对每个对象保存一个整型的引用计数器属性。用于记录对象被引用的情况。<br>对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1；当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，即表示对象A不可能再被使用，可进行回收。</p>
+<blockquote>
+<p>优点：实现简单，垃圾对象便于辨识；判定效率高，回收没有延迟性。</p>
+</blockquote>
+<blockquote>
+<p>缺点：</p>
+<ul>
+<li>它需要单独的字段存储计数器，这样的做法增加了存储空间的开销。</li>
+<li>每次赋值都需要更新计数器，伴随着加法和减法操作，这增加了时间开销。</li>
+<li>用计数器有一个严重的问题，即无法处理<code>循环引用</code>的情况。这是一条致命缺陷，导致在Java的垃圾回收器中没有使用这类算法。</li>
+</ul>
+</blockquote>
+<h3 id="可达性分析算法（根搜索算法、追踪性垃圾收集）"><a href="#可达性分析算法（根搜索算法、追踪性垃圾收集）" class="headerlink" title="可达性分析算法（根搜索算法、追踪性垃圾收集）"></a>可达性分析算法（根搜索算法、追踪性垃圾收集）</h3><p>基本思路</p>
+<blockquote>
+<p>可达性分析算法是以根对象集合（GCRoots）为起始点，按照从上至下的方式搜索被根对象集合所连接的目标对象是否可达。<br>使用可达性分析算法后，内存中的存活对象都会被根对象集合直接或间接连接着，搜索所走过的路径称为引用链（Reference Chain）<br>如果目标对象没有任何引用链相连，则是不可达的，就意味着该对象己经死亡，可以标记为垃圾对象。<br>在可达性分析算法中，只有能够被根对象集合直接或者间接连接的对象才是存活对象。</p>
+</blockquote>
+<h3 id="GC-Roots包括以下几类元素："><a href="#GC-Roots包括以下几类元素：" class="headerlink" title="GC Roots包括以下几类元素："></a>GC Roots包括以下几类元素：</h3><ul>
+<li>虚拟机栈中引用的对象 比如：各个线程被调用的方法中使用到的参数、局部变量等。</li>
+<li>本地方法栈内JNI（通常说的本地方法）引用的对象</li>
+<li>方法区中类静态属性引用的对象  比如：Java类的引用类型静态变量</li>
+<li>方法区中常量引用的对象 比如：字符串常量池（String Table）里的引用</li>
+<li>所有被同步锁synchronized持有的对象</li>
+<li>Java虚拟机内部的引用。 基本数据类型对应的Class对象，一些常驻的异常对象（如：NullPointerException、OutOfMemoryError），系统类加载器。</li>
+<li>反映java虚拟机内部情况的JMXBean、JVMTI中注册的回调、本地代码缓存等。</li>
+</ul>
+<p>除了这些固定的GC Roots集合以外，根据用户所选用的垃圾收集器以及当前回收的内存区域不同，还可以有其他对象“临时性”地加入，共同构成完整GC Roots集合。比如：分代收集和局部回收（PartialGC）。</p>
+<p>如果只针对Java堆中的某一块区域进行垃圾回收（比如：典型的只针对新生代），必须考虑到内存区域是虚拟机自己的实现细节，更不是孤立封闭的，这个区域的对象完全有可能被其他区域的对象所引用，这时候就需要一并将关联的区域对象也加入GCRoots集合中去考虑，才能保证可达性分析的准确性。</p>
+<p>小技巧：由于Root采用栈方式存放变量和指针，所以如果一个指针，它保存了堆内存里面的对象，但是自己又不存放在堆内存里面，那它就是一个Root。</p>
+<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-thin"></i><p>注意</p>
+</div><div class="notel-content"><p>如果要使用可达性分析算法来判断内存是否可回收，那么分析工作必须在一个能保障一致性的快照中进行。这点不满足的话分析结果的准确性就无法保证。<br>这点也是导致GC进行时必须“stop The World”的一个重要原因。<br>即使是号称（几乎）不会发生停顿的CMS收集器中，枚举根节点时也是必须要停顿的。</p>
+</div></div>
+
+<h2 id="1-2-对象的finalization机制"><a href="#1-2-对象的finalization机制" class="headerlink" title="1.2 对象的finalization机制"></a>1.2 对象的finalization机制</h2><p>Java语言提供了对象终止（finalization）机制来允许开发人员提供对象被销毁之前的自定义处理逻辑。</p>
+<p>当垃圾回收器发现没有引用指向一个对象，即：垃圾回收此对象之前，总会先调用这个对象的finalize()方法。</p>
+<p>finalize() 方法允许在子类中被重写，用于在对象被回收时进行资源释放。通常在这个方法中进行一些资源释放和清理的工作，比如关闭文件、套接字和数据库连接等。</p>
+<p>永远不要主动调用某个对象的finalize()方法I应该交给垃圾回收机制调用。理由包括下面三点：</p>
+<ul>
+<li>在finalize()时可能会导致对象复活。</li>
+<li>finalize()方法的执行时间是没有保障的，它完全由GC线程决定，极端情况下，若不发生GC，则finalize()方法将没有执行机会。</li>
+<li>一个糟糕的finalize()会严重影响Gc的性能。</li>
+</ul>
+<p>从功能上来说，finalize()方法与C中的析构函数比较相似，但是Java采用的是基于垃圾回收器的自动内存管理机制，所以finalize()方法在本质上不同于C中的析构函数。</p>
+<p>由于finalize()方法的存在，虚拟机中的对象一般处于三种可能的状态。</p>
+<h4 id="生存还是死亡？"><a href="#生存还是死亡？" class="headerlink" title="生存还是死亡？"></a>生存还是死亡？</h4><p>如果从所有的根节点都无法访问到某个对象，说明对象己经不再使用了。一般来说，此对象需要被回收。但事实上，也并非是“非死不可”的，这时候它们暂时处于“缓刑”阶段。一个无法触及的对象有可能在某一个条件下“复活”自己，如果这样，那么对它的回收就是不合理的，为此，定义虚拟机中的对象可能的三种状态。如下：</p>
+<ul>
+<li>可触及的：从根节点开始，可以到达这个对象。</li>
+<li>可复活的：对象的所有引用都被释放，但是对象有可能在finalize()中复活。</li>
+<li>不可触及的：对象的finalize()被调用，并且没有复活，那么就会进入不可触及状态。不可触及的对象不可能被复活，因为finalize()只会被调用一次。</li>
+</ul>
+<p>以上3种状态中，是由于finalize()方法的存在，进行的区分。只有在对象不可触及时才可以被回收。</p>
+<h4 id="具体过程"><a href="#具体过程" class="headerlink" title="具体过程"></a>具体过程</h4><p>判定一个对象objA是否可回收，至少要经历两次标记过程：</p>
+<ol>
+<li>如果对象objA到GC Roots没有引用链，则进行第一次标记。</li>
+<li>进行筛选，判断此对象是否有必要执行finalize()方法</li>
+<li>如果对象objA没有重写finalize()方法，或者finalize()方法已经被虚拟机调用过，则虚拟机视为“没有必要执行”，objA被判定为不可触及的。</li>
+<li>如果对象objA重写了finalize()方法，且还未执行过，那么objA会被插入到F-Queue队列中，由一个虚拟机自动创建的、低优先级的Finalizer线程触发其finalize()方法执行。</li>
+<li>finalize()方法是对象逃脱死亡的最后机会，稍后GC会对F-Queue队列中的对象进行第二次标记。如果objA在finalize()方法中与引用链上的任何一个对象建立了联系，那么在第二次标记时，objA会被移出“即将回收”集合。之后，对象会再次出现没有引用存在的情况。在这个情况下，finalize方法不会被再次调用，对象会直接变成不可触及的状态，也就是说，一个对象的finalize方法只会被调用一次。</li>
+</ol>
+<h2 id="1-3-清除阶段"><a href="#1-3-清除阶段" class="headerlink" title="1.3 清除阶段"></a>1.3 清除阶段</h2><p>目前在JVM中比较常见的三种垃圾收集算法是标记一清除算法（Mark-Sweep）、复制算法（copying）、标记-压缩算法（Mark-Compact）</p>
+<h3 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h3><h4 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h4><p>当堆中的有效内存空间（available memory）被耗尽的时候，就会停止整个程序（也被称为stop the world），然后进行两项工作，第一项则是标记，第二项则是清除</p>
+<ol>
+<li>标记：Collector从引用根节点开始遍历，标记所有被引用的对象。一般是在对象的Header中记录为可达对象。 </li>
+<li>清除：Collector对堆内存从头到尾进行线性的遍历，如果发现某个对象在其Header中没有标记为可达对象，则将其回收</li>
+</ol>
+<p>缺点</p>
+<ul>
+<li>标记清除算法的效率不算高</li>
+<li>在进行GC的时候，需要停止整个应用程序，用户体验较差</li>
+<li>这种方式清理出来的空闲内存是不连续的，产生内碎片，需要维护一个空闲列表</li>
+</ul>
+<h4 id="何为清除？"><a href="#何为清除？" class="headerlink" title="何为清除？"></a>何为清除？</h4><p>这里所谓的清除并不是真的置空，而是把需要清除的对象地址保存在空闲的地址列表里。下次有新对象需要加载时，判断垃圾的位置空间是否够，如果够，就存放覆盖原有的地址。</p>
+<h3 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h3><p>将活着的内存空间分为两块，每次只使用其中一块，在垃圾回收时将正在使用的内存中的存活对象复制到未被使用的内存块中，之后清除正在使用的内存块中的所有对象，交换两个内存的角色，最后完成垃圾回收</p>
+<p>优点</p>
+<ul>
+<li>没有标记和清除过程，实现简单，运行高效</li>
+<li>复制过去以后保证空间的连续性，不会出现“碎片”问题。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>此算法的缺点也是很明显的，就是需要两倍的内存空间。</li>
+<li>对于G1这种分拆成为大量region的GC，复制而不是移动，意味着GC需要维护region之间对象引用关系，不管是内存占用或者时间开销也不小</li>
+</ul>
+<h3 id="标记-压缩（整理）算法"><a href="#标记-压缩（整理）算法" class="headerlink" title="标记-压缩（整理）算法"></a>标记-压缩（整理）算法</h3><p>标记-压缩算法的最终效果等同于标记-清除算法执行完成后，再进行一次内存碎片整理，因此，也可以把它称为标记-清除-压缩（Mark-Sweep-Compact）算法。</p>
+<p>优点</p>
+<ul>
+<li>消除了标记-清除算法当中，内存区域分散的缺点，我们需要给新对象分配内存时，JVM只需要持有一个内存的起始地址即可。</li>
+<li>消除了复制算法当中，内存减半的高额代价。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>从效率上来说，标记-整理算法要低于复制算法。</li>
+<li>移动对象的同时，如果对象被其他对象引用，则还需要调整引用的地址</li>
+<li>移动过程中，需要全程暂停用户应用程序。即：STW</li>
+</ul>
+<h3 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h3><p>分代收集算法，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的收集方式，以便提高回收效率。一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点使用不同的回收算法，以提高垃圾回收的效率。</p>
+<p>在Java程序运行的过程中，会产生大量的对象，其中有些对象是与业务信息相关，比如Http请求中的Session对象、线程、Socket连接，这类对象跟业务直接挂钩，因此生命周期比较长。但是还有一些对象，主要是程序运行过程中生成的临时变量，这些对象生命周期会比较短，比如：String对象，由于其不变类的特性，系统会产生大量的这些对象，有些对象甚至只用一次即可回收。<br>分代收集算法，是基于这样一个事实：不同的对象的生命周期是不一样的。因此，不同生命周期的对象可以采取不同的收集方式，以便提高回收效率。一般是把Java堆分为新生代和老年代，这样就可以根据各个年代的特点使用不同的回收算法，以提高垃圾回收的效率。</p>
+<h4 id="年轻代（Young-Gen）"><a href="#年轻代（Young-Gen）" class="headerlink" title="年轻代（Young Gen）"></a>年轻代（Young Gen）</h4><p>年轻代特点：区域相对老年代较小，对象生命周期短、存活率低，回收频繁。</p>
+<p>这种情况复制算法的回收整理，速度是最快的。复制算法的效率只和当前存活对象大小有关，因此很适用于年轻代的回收。而复制算法内存利用率不高的问题，通过hotspot中的两个survivor的设计得到缓解。</p>
+<h4 id="老年代（Tenured-Gen）"><a href="#老年代（Tenured-Gen）" class="headerlink" title="老年代（Tenured Gen）"></a>老年代（Tenured Gen）</h4><p>老年代特点：区域较大，对象生命周期长、存活率高，回收不及年轻代频繁。</p>
+<p>这种情况存在大量存活率高的对象，复制算法明显变得不合适。一般是由标记-清除或者是标记-清除与标记-整理的混合实现。</p>
+<ul>
+<li>Mark阶段的开销与存活对象的数量成正比。</li>
+<li>Sweep阶段的开销与所管理区域的大小成正相关。</li>
+<li>Compact阶段的开销与存活对象的数据成正比。</li>
+</ul>
+<p>以HotSpot中的CMS回收器为例，CMS是基于Mark-Sweep实现的，对于对象的回收效率很高。而对于碎片问题，CMS采用基于Mark-Compact算法的Serial Old回收器作为补偿措施：当内存回收不佳（碎片导致的Concurrent Mode Failure时），将采用Serial Old执行Full GC以达到对老年代内存的整理。</p>
+<h3 id="增量收集算法"><a href="#增量收集算法" class="headerlink" title="增量收集算法"></a>增量收集算法</h3><p>上述现有的算法，在垃圾回收过程中，应用软件将处于一种Stop the World的状态。在Stop the World状态下，应用程序所有的线程都会挂起，暂停一切正常的工作，等待垃圾回收的完成。如果垃圾回收时间过长，应用程序会被挂起很久，将严重影响用户体验或者系统的稳定性。为了解决这个问题，即对实时垃圾收集算法的研究直接导致了增量收集（Incremental Collecting）算法的诞生。</p>
+<h4 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h4><p>如果一次性将所有的垃圾进行处理，需要造成系统长时间的停顿，那么就可以让垃圾收集线程和应用程序线程交替执行。每次，垃圾收集线程只收集一小片区域的内存空间，接着切换到应用程序线程。依次反复，直到垃圾收集完成。</p>
+<p>总的来说，增量收集算法的基础仍是传统的标记-清除和复制算法。增量收集算法通过对线程间冲突的妥善处理，允许垃圾收集线程以分阶段的方式完成标记、清理或复制工作</p>
+<p>缺点</p>
+<p>使用这种方式，由于在垃圾回收过程中，间断性地还执行了应用程序代码，所以能减少系统的停顿时间。但是，因为线程切换和上下文转换的消耗，会使得垃圾回收的总体成本上升，造成系统吞吐量的下降。</p>
+<h3 id="分区算法"><a href="#分区算法" class="headerlink" title="分区算法"></a>分区算法</h3><p>一般来说，在相同条件下，堆空间越大，一次Gc时所需要的时间就越长，有关GC产生的停顿也越长。为了更好地控制GC产生的停顿时间，将一块大的内存区域分割成多个小块，根据目标的停顿时间，每次合理地回收若干个小区间，而不是整个堆空间，从而减少一次GC所产生的停顿。</p>
+<p>分代算法将按照对象的生命周期长短划分成两个部分，分区算法将整个堆空间划分成连续的不同小区间。</p>
+<p>每一个小区间都独立使用，独立回收。这种算法的好处是可以控制一次回收多少个小区间。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/JVM/%E5%88%86%E5%8C%BA%E7%AE%97%E6%B3%95.jpg"
+                      alt="image-20200427110606877"
+                ></p>
+]]></content>
+      <categories>
+        <category>JVM</category>
+      </categories>
+      <tags>
+        <tag>JVM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hash MAP/SET</title>
+    <url>/2023/09/17/LeetCode/Hash/</url>
+    <content><![CDATA[<h3 id="1207-独一无二的出现次数"><a href="#1207-独一无二的出现次数" class="headerlink" title="1207. 独一无二的出现次数"></a>1207. 独一无二的出现次数</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">uniqueOccurrences</span><span class="params">(<span class="type">int</span>[] arr)</span> &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map1 = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;Integer,Integer&gt;();</span><br><span class="line">        Set&lt;Integer&gt; set1 = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;i&lt;arr.length;i++)&#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> map1.getOrDefault(arr[i],<span class="number">0</span>) + <span class="number">1</span>;  <span class="comment">// 获取key对应的value，如果key不存在，则返回0，并把value设置为1</span></span><br><span class="line">            map1.put(arr[i],count);</span><br><span class="line">        &#125;   </span><br><span class="line"><span class="comment">// Iterator &lt; Entry &lt; Integer, Integer &gt;&gt; iterator = map1.entrySet().iterator();</span></span><br><span class="line"><span class="comment">//         while(iterator.hasNext())&#123;</span></span><br><span class="line"><span class="comment">//             Entry&lt;Integer,Integer&gt; entry = iterator.next();</span></span><br><span class="line"><span class="comment">//             set1.add(entry.getValue());</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(Map.Entry&lt;Integer,Integer&gt; entry:map1.entrySet())&#123;</span><br><span class="line">            set1.add(entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> map1.size()==set1.size();  </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h6 id="HashMap五种遍历方式"><a href="#HashMap五种遍历方式" class="headerlink" title="HashMap五种遍历方式"></a><a class="link"   href="https://cloud.tencent.com/developer/article/1751974" >HashMap五种遍历方式 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></h6><h3 id="49-字母异位词分组"><a href="#49-字母异位词分组" class="headerlink" title="49. 字母异位词分组"></a>49. 字母异位词分组</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; <span class="title function_">groupAnagrams</span><span class="params">(String[] strs)</span> &#123;</span><br><span class="line">        Map&lt;String,List&lt;String&gt;&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,List&lt;String&gt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(String str :strs)&#123;</span><br><span class="line">            <span class="type">char</span>[] chars = str.toCharArray();  <span class="comment">//将每个单词转为字符数组 排序 以此为map 的key </span></span><br><span class="line">            Arrays.sort(chars);   </span><br><span class="line">            <span class="type">String</span> <span class="variable">kstr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(chars);</span><br><span class="line">            List&lt;String&gt; list =  map.getOrDefault(kstr,<span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;String&gt;());</span><br><span class="line">            list.add(str);</span><br><span class="line">            map.put(kstr,list);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;List&lt;String&gt;&gt;(map.values());   <span class="comment">//new 后面要跟 具体集合名字</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="128-最长连续序列"><a href="#128-最长连续序列" class="headerlink" title="128. 最长连续序列"></a>128. 最长连续序列</h3><blockquote>
+<p>我们要找到一个连续序列的开始 怎么才算是开始？ 它的前一个不存在 因此 利用set.contains 检查是否存在  不存在就可以成为开端 </p>
+</blockquote>
+<div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">longestConsecutive</span><span class="params">(<span class="type">int</span>[] nums)</span> &#123;</span><br><span class="line">        Set&lt;Integer&gt; set = <span class="keyword">new</span> <span class="title class_">HashSet</span>&lt;Integer&gt;();</span><br><span class="line">        <span class="type">int</span> curcount;</span><br><span class="line">        <span class="type">int</span> longest=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> curnum;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> n:nums)&#123;</span><br><span class="line">            set.add(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nums.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!set.contains(nums[i]-<span class="number">1</span>))&#123;</span><br><span class="line">                curcount =<span class="number">1</span>;</span><br><span class="line">                curnum=nums[i];</span><br><span class="line">                <span class="keyword">while</span>(set.contains(curnum+<span class="number">1</span>))&#123;</span><br><span class="line">                curcount++;</span><br><span class="line">                curnum++;</span><br><span class="line">            &#125;</span><br><span class="line">            longest = Math.max(longest,curcount);</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> longest;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>Hash</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>双指针</title>
     <url>/2023/09/10/LeetCode/%E5%8F%8C%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<h3 id="167-两数之和-II-输入有序数组"><a href="#167-两数之和-II-输入有序数组" class="headerlink" title="167. 两数之和 II - 输入有序数组"></a>167. 两数之和 II - 输入有序数组</h3><div class="highlight-container" data-rel="Java"><figure class="iseeu highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span>[] twoSum(<span class="type">int</span>[] numbers, <span class="type">int</span> target) &#123;</span><br><span class="line">        <span class="type">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> j=numbers.length-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(target&gt;numbers[i]+numbers[j]) i++;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(target&lt;numbers[i]+numbers[j]) j--;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i+<span class="number">1</span>,j+<span class="number">1</span>&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
@@ -512,6 +530,24 @@
       </tags>
   </entry>
   <entry>
+    <title>MySQL进阶-引擎</title>
+    <url>/2023/09/09/MySQL/INNODB%E5%BC%95%E6%93%8E/</url>
+    <content><![CDATA[<h3 id="1-逻辑结构"><a href="#1-逻辑结构" class="headerlink" title="1.逻辑结构"></a>1.逻辑结构</h3><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/MySQL/%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.jpg"
+                      alt="image"
+                ></p>
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL进阶-MVCC</title>
     <url>/2023/09/06/MySQL/MVCC/</url>
     <content><![CDATA[<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="1-当前读"><a href="#1-当前读" class="headerlink" title="1.当前读"></a>1.当前读</h3><p>当前读就是读取记录的最新版本，读取时还要加上锁，导致其他并发事务无法访问该记录，从而阻塞其他并发事务，因此，其并发度最低。</p>
@@ -622,24 +658,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL进阶-引擎</title>
-    <url>/2023/09/09/MySQL/INNODB%E5%BC%95%E6%93%8E/</url>
-    <content><![CDATA[<h3 id="1-逻辑结构"><a href="#1-逻辑结构" class="headerlink" title="1.逻辑结构"></a>1.逻辑结构</h3><p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/MySQL/%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.jpg"
-                      alt="image"
-                ></p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL进阶-事务隔离与锁</title>
     <url>/2023/09/08/MySQL/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%94%81/</url>
     <content><![CDATA[<div class="note-large note"><div class="notel-title"><p>note</p>
@@ -699,6 +717,31 @@
 <h3 id="5-异常"><a href="#5-异常" class="headerlink" title="5.异常"></a>5.异常</h3><div class="highlight-container" data-rel="Sql"><figure class="iseeu highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 异常                 </span></span><br><span class="line"><span class="keyword">declare</span> exit handler <span class="keyword">for</span> [<span class="keyword">SQLSTATE</span> <span class="string">&#x27;XXXX&#x27;</span>(异常状态码)<span class="operator">/</span><span class="keyword">not</span> found] 执行操作        </span><br><span class="line">```                 </span><br><span class="line"><span class="operator">!</span>[存储过程游标异常处理.jpg](<span class="operator">/</span>images<span class="operator">/</span>MySQL<span class="operator">/</span>存储过程游标异常处理.jpg)</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span> 存储函数</span><br><span class="line">```<span class="keyword">sql</span>              </span><br><span class="line"><span class="comment">-- 存储函数 与存储过程类似 只能是IN类型参数 不能有输出类型参数 必须有return返回值                           </span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">FUNCTION</span> 函数名(参数列表) </span><br><span class="line"><span class="keyword">RETURNS</span> type characters <span class="comment">--必须指定特征类型 </span></span><br><span class="line"><span class="comment">--- 调用函数</span></span><br><span class="line"><span class="keyword">select</span> 函数名(参数列表)</span><br></pre></td></tr></table></figure></div>
 
 
+]]></content>
+      <categories>
+        <category>数据库</category>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MySQL运维-日志</title>
+    <url>/2023/09/10/MySQL/%E6%97%A5%E5%BF%97/</url>
+    <content><![CDATA[<h3 id="1-错误日志"><a href="#1-错误日志" class="headerlink" title="1.错误日志"></a>1.错误日志</h3><p>当数据库出现错误时，错误日志会记录下来，通过错误日志可以分析出错误的原因。</p>
+<h3 id="2-binlog"><a href="#2-binlog" class="headerlink" title="2.binlog"></a>2.binlog</h3><p>binlog是二进制日志文件，记录了数据库所有的DDL和DML语句（除select）<br>可以记录某一行数据变化前后的值，也可以记录某一行数据的变化过程（sql语句）<br>作用：</p>
+<ul>
+<li>数据恢复</li>
+<li>主从复制<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-thin"></i><p>主从复制过程</p>
+</div><div class="notel-content"><p>主库将数据库中数据的变化写入到 binlog从库连接主库从库会创建一个 I&#x2F;O 线程向主库请求更新的 binlog主库会创建一个 binlog dump 线程来发送 binlog ，从库中的 I&#x2F;O 线程负责接收从库的 I&#x2F;O 线程将接收的 binlog 写入到 relay log 中。从库的 SQL 线程读取 relay log 同步数据本地（也就是再执行一遍 SQL ）。</p>
+</div></div></li>
+</ul>
+<div class="note default"><p>DDL: create,drop,alter 操作表结构<br>DML：insert,update,delete 操作表数据</p>
+</div>
+
+<h3 id="3-查询日志"><a href="#3-查询日志" class="headerlink" title="3.查询日志"></a>3.查询日志</h3><p>记录数据所有操作sql语句</p>
+<h3 id="4-慢查询日志"><a href="#4-慢查询日志" class="headerlink" title="4.慢查询日志"></a>4.慢查询日志</h3><p>慢查询日志记录了所有执行时间超过long_query_time秒的sql语句 效率比较低的语句</p>
 ]]></content>
       <categories>
         <category>数据库</category>
@@ -829,31 +872,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MySQL运维-日志</title>
-    <url>/2023/09/10/MySQL/%E6%97%A5%E5%BF%97/</url>
-    <content><![CDATA[<h3 id="1-错误日志"><a href="#1-错误日志" class="headerlink" title="1.错误日志"></a>1.错误日志</h3><p>当数据库出现错误时，错误日志会记录下来，通过错误日志可以分析出错误的原因。</p>
-<h3 id="2-binlog"><a href="#2-binlog" class="headerlink" title="2.binlog"></a>2.binlog</h3><p>binlog是二进制日志文件，记录了数据库所有的DDL和DML语句（除select）<br>可以记录某一行数据变化前后的值，也可以记录某一行数据的变化过程（sql语句）<br>作用：</p>
-<ul>
-<li>数据恢复</li>
-<li>主从复制<div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-thin"></i><p>主从复制过程</p>
-</div><div class="notel-content"><p>主库将数据库中数据的变化写入到 binlog从库连接主库从库会创建一个 I&#x2F;O 线程向主库请求更新的 binlog主库会创建一个 binlog dump 线程来发送 binlog ，从库中的 I&#x2F;O 线程负责接收从库的 I&#x2F;O 线程将接收的 binlog 写入到 relay log 中。从库的 SQL 线程读取 relay log 同步数据本地（也就是再执行一遍 SQL ）。</p>
-</div></div></li>
-</ul>
-<div class="note default"><p>DDL: create,drop,alter 操作表结构<br>DML：insert,update,delete 操作表数据</p>
-</div>
-
-<h3 id="3-查询日志"><a href="#3-查询日志" class="headerlink" title="3.查询日志"></a>3.查询日志</h3><p>记录数据所有操作sql语句</p>
-<h3 id="4-慢查询日志"><a href="#4-慢查询日志" class="headerlink" title="4.慢查询日志"></a>4.慢查询日志</h3><p>慢查询日志记录了所有执行时间超过long_query_time秒的sql语句 效率比较低的语句</p>
-]]></content>
-      <categories>
-        <category>数据库</category>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MySQL进阶-锁</title>
     <url>/2023/09/08/MySQL/%E9%94%81/</url>
     <content><![CDATA[<h3 id="1-锁的分类"><a href="#1-锁的分类" class="headerlink" title="1. 锁的分类"></a>1. 锁的分类</h3><h4 id="全局锁"><a href="#全局锁" class="headerlink" title="全局锁"></a>全局锁</h4><p>锁住整个库 用来数据备份</p>
@@ -941,28 +959,17 @@
       </tags>
   </entry>
   <entry>
-    <title>奔赴</title>
-    <url>/2023/09/07/Some%20to%20say/dis_break_01/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Self</category>
-      </categories>
-      <tags>
-        <tag>Self</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>班长竞选</title>
     <url>/2023/09/09/Some%20to%20say/%E7%8F%AD%E9%95%BF%E7%AB%9E%E9%80%89/</url>
     <content><![CDATA[<p>1.尊敬的各位老师亲爱的同学们大家上午好，首先十分感谢学院能给我这次参与竞选班干部的机会。今天我要竞选的职位是班长。</p>
 <p>2.我的演讲讲分为以下三部分 自我介绍 个人看法与工作计划 我的优势</p>
-<p>3.首先简单做个自我介绍，我叫比鹏飞，年龄22岁，来自山东济南。大二时从数学系转专业到计算机，从此走上不归路。前几年计算机是宇宙机，现在是不是变成生化环计了。开玩笑归开玩笑，我对编程还是有兴趣的，对有趣新奇的技术始终保持着热爱。这是大学期间一些我的实践经历与比较水的奖我也就不多说了吧。</p>
+<p>3.首先简单做个自我介绍，我叫毕鹏飞，年龄22岁，来自山东济南。大二时从数学系转专业到计算机。前几年计算机是宇宙机，现在是不是变成生化环计了。我对这个专业是有兴趣的，对有趣新奇的技术始终保持着热爱。这是大学期间一些我的实践经历与比较水的奖我也就不多说了吧。</p>
 <p>4.下面我要谈谈我对于班长的认识。</p>
 <div class="note-large default"><div class="notel-title"><i class="notel-icon fa-solid fa-comment"></i><p>Note</p>
 </div><div class="notel-content"><ul>
-<li>首先，作为班长，要以身作则。不仅要对自己负责，更要对班级同学们负责。对于班级的事务、活动，要尽职尽责，合理地协调安排。其次，积极的维护班级荣誉，我们是一个集体，班长要促进班级和谐团结。为大家创造一个良好的学习环境。</li>
-<li>扮演好同学与老师之间沟通桥梁的角色，善于倾听同学的声音和意见，并及时的反馈给老师和学院。</li>
-<li>JI课业压力大、时间紧迫。我十分愿意与同学们共同解决无论是学业上的困难还是生活中的问题。我乐意尽自己的一份力帮助大家。</li>
+<li>首先，作为班长，要以身作则。不仅要对自己负责，更要对班级同学们负责。对于班级的事务、活动，要合理地协调安排妥当。其次，积极的维护班级荣誉，班级是一个集体，班长要促进班级团结，营造好一个和谐的氛围。</li>
+<li>扮演好同学与老师之间沟通桥梁的角色，善于倾听同学们的声音和意见，并及时的反馈给老师和学院。</li>
+<li>JI课业压力大、时间紧迫。我十分愿意帮助同学们解决无论是学业还是生活上的问题。我乐意尽自己的一份力帮助大家。</li>
 </ul>
 </div></div>
 
@@ -981,8 +988,8 @@
 <li>性格温和 脾气好 很容易相处哈</li>
 <li>暑期语言班担任五班班长 期间与老师和同学相处的很愉快 我对自己的表现还算满意</li>
 </ul>
-<p>当然，我也会有存在一些不足的地方，在座的有比我年龄稍大的同学，处事经验肯定更丰富。我愿意接受大家每一位的意见和建议。如果有做的不够好的，恳请大家指正。</p>
-<p>7.最后的最后。我想说，当下的环境大家也都有所了解，但也不用过于焦虑，毕竟咱们计算机专业，瘦死的骆驼比马大。我们每一位同学的心中都有各自想去到的远方，请大家务必相信自己，坚定自己的选择。追风赶月莫停留，平芜尽处是春山，愿你所有坚持，都能换来繁花似锦，衷心祝愿大家两年之后都能遇到一个更好的自己。</p>
+<p>当然，我也会有存在一些不足的地方。我愿意接受大家的意见和建议。如果有做的不够好的，恳请大家指正。</p>
+<p>7.最后的最后。我想说，当下的环境大家也都有所了解，但也不用过于焦虑。我们每一位同学的心中都有各自想去到的远方，请大家务必相信自己，坚定自己的选择。追风赶月莫停留，平芜尽处是春山，愿你所有坚持，都能换来繁花似锦，衷心祝愿大家两年之后都能遇到一个更好的自己。</p>
 ]]></content>
       <categories>
         <category>Self</category>
@@ -1003,6 +1010,26 @@
       </categories>
       <tags>
         <tag>Self</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CS224n-Assignment1</title>
+    <url>/2023/09/16/NLP/CS224n/lec01/</url>
+    <content><![CDATA[<h1 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h1><p>这里我们将探索两类词向量：共现矩阵 和 word2vec</p>
+<h2 id="Part-1：基于计数的词向量"><a href="#Part-1：基于计数的词向量" class="headerlink" title="Part 1：基于计数的词向量"></a>Part 1：基于计数的词向量</h2><p>这部分要实现的是，给定语料库，根据共现矩阵计算词向量，得到语料库中每个词的词向量，流程如下：</p>
+<ul>
+<li>计算语料库的单词集</li>
+<li>计算共现矩阵</li>
+<li>使用SVD降维</li>
+<li>分析词向量</li>
+</ul>
+]]></content>
+      <categories>
+        <category>NLP</category>
+        <category>CS224N</category>
+      </categories>
+      <tags>
+        <tag>NLP</tag>
       </tags>
   </entry>
 </search>
