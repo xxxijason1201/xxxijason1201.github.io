@@ -19,15 +19,17 @@
     <meta name="revisit-after" content="1 days">
     
         <meta property="og:type" content="article">
-<meta property="og:title" content="CS224n-Assignment1">
+<meta property="og:title" content="CS224N">
 <meta property="og:url" content="http://example.com/2023/09/16/NLP/CS224n/lec01/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/CS224N/CBOW.jpg">
 <meta property="article:published_time" content="2023-09-16T04:21:27.638Z">
-<meta property="article:modified_time" content="2023-09-16T06:56:17.163Z">
+<meta property="article:modified_time" content="2023-09-21T13:18:19.914Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/CS224N/CBOW.jpg">
     
     
     <!--- Icon Part-->
@@ -39,7 +41,7 @@
     
     <title>
         
-            CS224n-Assignment1 -
+            CS224N -
         
         Jason&#39;s Universe 🛸
     </title>
@@ -347,9 +349,9 @@
             
                 
                 
-                <img src="https://images5.alphacoders.com/742/742894.jpg" alt="CS224n-Assignment1" class="max-w-none"/>
+                <img src="https://images5.alphacoders.com/742/742894.jpg" alt="CS224N" class="max-w-none"/>
                 
-                <h1 class="article-title-cover">CS224n-Assignment1</h1>
+                <h1 class="article-title-cover">CS224N</h1>
             
             </div>
             
@@ -378,8 +380,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-09-16 14:56:17</span>
-            <span class="mobile">2023-09-16 14:56:17</span>
+            <span class="desktop">2023-09-21 21:18:19</span>
+            <span class="mobile">2023-09-21 21:18:19</span>
             <span class="hover-info">Updated</span>
         </span>
     
@@ -427,12 +429,12 @@
     
     
         <span class="article-wordcount article-meta-item">
-            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>97 Words</span>
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>1.2k Words</span>
         </span>
     
     
         <span class="article-min2read article-meta-item">
-            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>5 Mins</span>
         </span>
     
     
@@ -451,29 +453,38 @@
 
 
         <div class="article-content markdown-body">
-            <h1 id="词向量"><a href="#词向量" class="headerlink" title="词向量"></a>词向量</h1><p>这里我们将探索两类词向量：共现矩阵 和 word2vec</p>
-<h2 id="Part-1：基于计数的词向量"><a href="#Part-1：基于计数的词向量" class="headerlink" title="Part 1：基于计数的词向量"></a>Part 1：基于计数的词向量</h2><p>这部分要实现的是，给定语料库，根据共现矩阵计算词向量，得到语料库中每个词的词向量，流程如下：</p>
-<ul>
-<li>计算语料库的单词集</li>
-<li>计算共现矩阵</li>
-<li>使用SVD降维</li>
-<li>分析词向量</li>
-</ul>
+            <h1 id="独热编码"><a href="#独热编码" class="headerlink" title="独热编码"></a>独热编码</h1><p>一种文本的离散表示形式是把单词表征为独热向量(one-hot vectors)的形式<br>独热向量：只有一个1，其余均为0的稀疏向量<br>在上述的独热向量离散表征里，所有词向量是正交的，这是一个很大的问题。对于独热向量，没有关于相似性概念，并且向量维度过大。</p>
+<h1 id="Word2vec"><a href="#Word2vec" class="headerlink" title="Word2vec"></a>Word2vec</h1><p>目标：为每个单词构建一个稠密表示的向量，使其与出现在相似上下文中的单词向量<code>相似</code>。<br>词向量(word vectors)有时被称为词嵌入(word embeddings)或词表示(word representations)。<br>稠密词向量是分布式表示(distributed representation)。<br>Word2Vec是一个迭代模型，该模型能够根据文本进行迭代学习，并最终能够对给定上下文的单词的概率对词向量进行编码呈现，而不是计算和存储一些大型数据集(可能是数十亿个句子)的全局信息。<br>这个想法是设计一个模型，该模型的参数就是词向量。然后根据一个目标函数训练模型，在每次模型的迭代计算误差，基于优化算法调整模型参数（词向量），减小损失函数，从而最终学习到词向量。大家知道在神经网络中对应的思路叫“反向传播”，模型和任务越简单，训练它的速度就越快。基于迭代的方法一次捕获一个单词的共现情况，而不是像SVD方法那样直接捕获所有的共现计数。</p>
+<p>两个算法：continuous bag-of-words(CBOW)和skip-gram</p>
+<h2 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h2><p>CBOW是根据中心词周围的上下文单词来预测该词的词向量<br>过程：输入上下文one-hot 通过矩阵V 获得输入词向量 取均值 再乘U -&gt;Softmax 获得中心词向量<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/CS224N/CBOW.jpg"
+                      alt="images"
+                ></p>
+<p>skip-gram则相反，是根据中心词预测周围上下文的词的概率分布<br>① 输入的中心词One-hot向量<br>② 输入乘以center word的矩阵 公式，得到词向量<br>③ 词向量乘以另一个context word的矩阵 公式 得到对每个词语的「相似度」<br>④ 对相似度得分取 Softmax 得到概率，与答案对比计算损失。</p>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><div class="highlight-container" data-rel="Python"><figure class="iseeu highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># %%</span></span><br><span class="line"><span class="comment"># code by Tae Hwan Jung @graykode</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_batch</span>():</span><br><span class="line">    random_inputs = []</span><br><span class="line">    random_labels = []</span><br><span class="line">    random_index = np.random.choice(<span class="built_in">range</span>(<span class="built_in">len</span>(skip_grams)), batch_size, replace=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> random_index:</span><br><span class="line">        random_inputs.append(np.eye(voc_size)[skip_grams[i][<span class="number">0</span>]])  <span class="comment"># target</span></span><br><span class="line">        random_labels.append(skip_grams[i][<span class="number">1</span>])  <span class="comment"># context word</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> random_inputs, random_labels</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Word2Vec</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>(Word2Vec, self).__init__()</span><br><span class="line">        <span class="comment"># W and WT is not Traspose relationship</span></span><br><span class="line">        self.W = nn.Linear(voc_size, embedding_size, bias=<span class="literal">False</span>) <span class="comment"># voc_size &gt; embedding_size Weight</span></span><br><span class="line">        self.WT = nn.Linear(embedding_size, voc_size, bias=<span class="literal">False</span>) <span class="comment"># embedding_size &gt; voc_size Weight</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, X</span>):</span><br><span class="line">        <span class="comment"># X : [batch_size, voc_size]</span></span><br><span class="line">        hidden_layer = self.W(X) <span class="comment"># hidden_layer : [batch_size, embedding_size]</span></span><br><span class="line">        output_layer = self.WT(hidden_layer) <span class="comment"># output_layer : [batch_size, voc_size]</span></span><br><span class="line">        <span class="keyword">return</span> output_layer</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    batch_size = <span class="number">2</span> <span class="comment"># mini-batch size</span></span><br><span class="line">    embedding_size = <span class="number">2</span> <span class="comment"># embedding size</span></span><br><span class="line"></span><br><span class="line">    sentences = [<span class="string">&quot;apple banana fruit&quot;</span>, <span class="string">&quot;banana orange fruit&quot;</span>, <span class="string">&quot;orange banana fruit&quot;</span>,</span><br><span class="line">                 <span class="string">&quot;dog cat animal&quot;</span>, <span class="string">&quot;cat monkey animal&quot;</span>, <span class="string">&quot;monkey dog animal&quot;</span>]</span><br><span class="line"></span><br><span class="line">    word_sequence = <span class="string">&quot; &quot;</span>.join(sentences).split()</span><br><span class="line">    word_list = <span class="string">&quot; &quot;</span>.join(sentences).split()</span><br><span class="line">    word_list = <span class="built_in">list</span>(<span class="built_in">set</span>(word_list))</span><br><span class="line">    word_dict = &#123;w: i <span class="keyword">for</span> i, w <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list)&#125;</span><br><span class="line">    voc_size = <span class="built_in">len</span>(word_list)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Make skip gram of one size window</span></span><br><span class="line">    skip_grams = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="built_in">len</span>(word_sequence) - <span class="number">1</span>):</span><br><span class="line">        target = word_dict[word_sequence[i]]</span><br><span class="line">        context = [word_dict[word_sequence[i - <span class="number">1</span>]], word_dict[word_sequence[i + <span class="number">1</span>]]]</span><br><span class="line">        <span class="keyword">for</span> w <span class="keyword">in</span> context:</span><br><span class="line">            skip_grams.append([target, w])</span><br><span class="line"></span><br><span class="line">    model = Word2Vec()</span><br><span class="line"></span><br><span class="line">    criterion = nn.CrossEntropyLoss()</span><br><span class="line">    optimizer = optim.Adam(model.parameters(), lr=<span class="number">0.001</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Training</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">6000</span>):</span><br><span class="line">        input_batch, target_batch = random_batch()</span><br><span class="line">        input_batch = torch.Tensor(input_batch)</span><br><span class="line">        target_batch = torch.LongTensor(target_batch)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        output = model(input_batch)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># output : [batch_size, voc_size], target_batch : [batch_size] (LongTensor, not one-hot)</span></span><br><span class="line">        loss = criterion(output, target_batch)</span><br><span class="line">        <span class="keyword">if</span> (epoch + <span class="number">1</span>) % <span class="number">1000</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;Epoch:&#x27;</span>, <span class="string">&#x27;%04d&#x27;</span> % (epoch + <span class="number">1</span>), <span class="string">&#x27;cost =&#x27;</span>, <span class="string">&#x27;&#123;:.6f&#125;&#x27;</span>.<span class="built_in">format</span>(loss))</span><br><span class="line"></span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i, label <span class="keyword">in</span> <span class="built_in">enumerate</span>(word_list):</span><br><span class="line">        W, WT = model.parameters()</span><br><span class="line">        x, y = W[<span class="number">0</span>][i].item(), W[<span class="number">1</span>][i].item()</span><br><span class="line">        plt.scatter(x, y)</span><br><span class="line">        plt.annotate(label, xy=(x, y), xytext=(<span class="number">5</span>, <span class="number">2</span>), textcoords=<span class="string">&#x27;offset points&#x27;</span>, ha=<span class="string">&#x27;right&#x27;</span>, va=<span class="string">&#x27;bottom&#x27;</span>)</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></div>
 
+<p><strong>补充</strong><br>向量之间越相似，点乘结果越大，从而归一化后得到的概率值也越大<br>模型的训练正是为了使得具有相似上下文的单词，具有相似的向量<br>点积是计算相似性的一种简单方法，在注意力机制中常使用点积计算 Score， <a class="link"   target="_blank" rel="noopener" href="https://www.showmeai.tech/article-detail/227" >Seq2Seq序列模型和注意力机制 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<p>其中对于名称中soft和max的解释如下（softmax在深度学习中经常使用到）：<br>max：因为放大了最大的概率<br>soft：因为仍然为较小的 公式 赋予了一定概率</p>
+<h2 id="word2vec中的梯度下降训练细节推导"><a href="#word2vec中的梯度下降训练细节推导" class="headerlink" title="word2vec中的梯度下降训练细节推导"></a>word2vec中的梯度下降训练细节推导</h2><p>暂略</p>
+<h1 id="基于SVD降维的词向量"><a href="#基于SVD降维的词向量" class="headerlink" title="基于SVD降维的词向量"></a>基于SVD降维的词向量</h1><p>基于词共现矩阵与SVD分解是构建词嵌入(即词向量)的一种方法。</p>
+<p>首先遍历一个很大的数据集和统计词的共现计数矩阵<br>然后对矩阵进行SVD分解<br><strong>再然后我们使用的矩阵U的行来作为字典中所有词的词向量</strong> why??</p>
+<h1 id=""><a href="#" class="headerlink" title=""></a></h1>
         </div>
 
         
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>Title:</strong> CS224n-Assignment1</li>
+        <li><strong>Title:</strong> CS224N</li>
         <li><strong>Author:</strong> Jason</li>
         <li><strong>Created at
                 :</strong> 2023-09-16 12:21:27</li>
         
             <li>
                 <strong>Updated at
-                    :</strong> 2023-09-16 14:56:17
+                    :</strong> 2023-09-21 21:18:19
             </li>
         
         <li>
@@ -596,8 +607,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">On this page</div>
-        <div class="page-title">CS224n-Assignment1</div>
-        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-text">词向量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1%EF%BC%9A%E5%9F%BA%E4%BA%8E%E8%AE%A1%E6%95%B0%E7%9A%84%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-text">Part 1：基于计数的词向量</span></a></li></ol></li></ol>
+        <div class="page-title">CS224N</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81"><span class="nav-text">独热编码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Word2vec"><span class="nav-text">Word2vec</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CBOW"><span class="nav-text">CBOW</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#word2vec%E4%B8%AD%E7%9A%84%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E8%AE%AD%E7%BB%83%E7%BB%86%E8%8A%82%E6%8E%A8%E5%AF%BC"><span class="nav-text">word2vec中的梯度下降训练细节推导</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ESVD%E9%99%8D%E7%BB%B4%E7%9A%84%E8%AF%8D%E5%90%91%E9%87%8F"><span class="nav-text">基于SVD降维的词向量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"></span></a></li></ol>
 
     </div>
 </div>
