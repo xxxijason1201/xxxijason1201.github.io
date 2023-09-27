@@ -13,18 +13,24 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="http://example.com/archives/page/3/"/>
+    <link rel="canonical" href="http://example.com/2023/09/22/nlp/cs224n/rnn/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/page/3/index.html">
+        <meta property="og:type" content="article">
+<meta property="og:title" content="RNN-Pytorch实现demo">
+<meta property="og:url" content="http://example.com/2023/09/22/NLP/CS224n/RNN/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/LM/RNN02.jpg">
+<meta property="og:image" content="http://example.com/images/LM/RNN01.jpg">
+<meta property="article:published_time" content="2023-09-22T00:49:07.119Z">
+<meta property="article:modified_time" content="2023-09-27T10:08:30.505Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="NLP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/LM/RNN02.jpg">
     
     
     <!--- Icon Part-->
@@ -36,7 +42,7 @@
     
     <title>
         
-            Archive -
+            RNN-Pytorch实现demo -
         
         Jason&#39;s Universe 🛸
     </title>
@@ -192,7 +198,7 @@
                         
                             <li class="navbar-item">
                                 <!-- Menu -->
-                                <a class="active" 
+                                <a class="" 
                                     href="/archives"  >
                                     
                                         
@@ -291,7 +297,7 @@
             
                 
                     <li class="drawer-navbar-item text-base my-1.5 flex justify-center items-center">
-                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group active" 
+                        <a class="rounded-3xl py-1.5 px-5 hover:border hover:!text-primary active:!text-primary group " 
                         href="/archives"  >
                              
                                 
@@ -337,191 +343,293 @@
             <div class="main-content">
 
                 
-                    <div class="archive-container ">
-    
-<div class="archive-list-container">
-    
-        <section class="archive-item">
-            <div class="archive-item-header">
-                <span class="archive-year">2023</span>
-                <span class="archive-year-post-count">[28]</span>
+                    <div class="post-page-container">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            
+                
+                
+                <img src="https://images5.alphacoders.com/742/742894.jpg" alt="RNN-Pytorch实现demo" class="max-w-none"/>
+                
+                <h1 class="article-title-cover">RNN-Pytorch实现demo</h1>
+            
             </div>
-            <ul class="article-list">
-              
-              <li class="article-item" date-is='09-27'>
-                <a href="/2023/09/27/NLP/CS224n/seq2seq/">
-                  <span class="article-title">seq2seq</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-26'>
-                <a href="/2023/09/26/%E5%AF%86%E7%A0%81%E5%AD%A6/001/">
-                  <span class="article-title">密码学记</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-22'>
-                <a href="/2023/09/22/NLP/CS224n/RNN/">
-                  <span class="article-title">RNN-Pytorch实现demo</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-21'>
-                <a href="/2023/09/21/Project%20Management/01/">
-                  <span class="article-title">Project Management</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-20'>
-                <a href="/2023/09/20/LeetCode/DP/">
-                  <span class="article-title">动态规划</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-17'>
-                <a href="/2023/09/17/LeetCode/%E5%AD%90%E4%B8%B2/">
-                  <span class="article-title">子串</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-17'>
-                <a href="/2023/09/17/LeetCode/Hash/">
-                  <span class="article-title">Hash MAP/SET</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-16'>
-                <a href="/2023/09/16/NLP/CS224n/lec01/">
-                  <span class="article-title">CS224N</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-13'>
-                <a href="/2023/09/13/LeetCode/%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-                  <span class="article-title">字符串and 数组</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-13'>
-                <a href="/2023/09/13/LeetCode/%E6%BB%91%E5%8A%A8%E4%B8%B2%E5%8F%A3/">
-                  <span class="article-title">滑动窗口</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-12'>
-                <a href="/2023/09/12/LeetCode/%E9%93%BE%E8%A1%A8/">
-                  <span class="article-title">链表</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-11'>
-                <a href="/2023/09/11/JVM/GC-%E5%9B%9E%E6%94%B6%E5%99%A8/">
-                  <span class="article-title">JVM-GC-回收器</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-11'>
-                <a href="/2023/09/11/JVM/GC-%E7%AE%97%E6%B3%95/">
-                  <span class="article-title">JVM-GC-概述及算法</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-10'>
-                <a href="/2023/09/10/MySQL/%E6%97%A5%E5%BF%97/">
-                  <span class="article-title">MySQL运维-日志</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-10'>
-                <a href="/2023/09/10/JAVA/%E9%9B%86%E5%90%88/">
-                  <span class="article-title">集合基操</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-10'>
-                <a href="/2023/09/10/JAVA/int%E6%95%B0%E7%BB%84%20integer%E6%95%B0%E7%BB%84%20list%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/">
-                  <span class="article-title">int数组 integer数组 list相互转换</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-10'>
-                <a href="/2023/09/10/Some%20to%20say/%E9%93%B6%E8%A1%8C%E8%BD%AF%E5%BC%80%E5%86%B2/">
-                  <span class="article-title">银行相关</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-10'>
-                <a href="/2023/09/10/LeetCode/%E5%8F%8C%E6%8C%87%E9%92%88/">
-                  <span class="article-title">双指针</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-09'>
-                <a href="/2023/09/09/MySQL/SQL%E4%BC%98%E5%8C%96/">
-                  <span class="article-title">MySQL进阶-SQL优化</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-09'>
-                <a href="/2023/09/09/LeetCode/%E8%B4%AA%E5%BF%83/">
-                  <span class="article-title">贪心</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-09'>
-                <a href="/2023/09/09/Some%20to%20say/%E7%8F%AD%E9%95%BF%E7%AB%9E%E9%80%89/">
-                  <span class="article-title">班长竞选</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-09'>
-                <a href="/2023/09/09/MySQL/INNODB%E5%BC%95%E6%93%8E/">
-                  <span class="article-title">MySQL进阶-引擎</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-08'>
-                <a href="/2023/09/08/MySQL/%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E4%B8%8E%E9%94%81/">
-                  <span class="article-title">MySQL进阶-事务隔离与锁</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-08'>
-                <a href="/2023/09/08/MySQL/%E9%94%81/">
-                  <span class="article-title">MySQL进阶-锁</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/">
-                  <span class="article-title">MySQL进阶-存储过程</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E8%A7%86%E5%9B%BE/">
-                  <span class="article-title">MySQL进阶-视图</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-07'>
-                <a href="/2023/09/07/MySQL/%E7%B4%A2%E5%BC%95/">
-                  <span class="article-title">MySQL进阶-索引</span>
-                </a>
-              </li>
-              
-              <li class="article-item" date-is='09-06'>
-                <a href="/2023/09/06/MySQL/MVCC/">
-                  <span class="article-title">MySQL进阶-MVCC</span>
-                </a>
-              </li>
-              
+            
+                    
+        
+        
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.jpg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Jason</span>
+                        
+                            <span class="author-label">Lv3</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fa-regular fa-pen-fancy"></i>&nbsp;
+        <span class="desktop">2023-09-22 08:49:07</span>
+        <span class="mobile">2023-09-22 08:49:07</span>
+        <span class="hover-info">Created</span>
+    </span>
+    
+        <span class="article-date article-meta-item">
+            <i class="fa-regular fa-wrench"></i>&nbsp;
+            <span class="desktop">2023-09-27 18:08:30</span>
+            <span class="mobile">2023-09-27 18:08:30</span>
+            <span class="hover-info">Updated</span>
+        </span>
+    
+
+    
+        <span class="article-categories article-meta-item">
+            <i class="fa-regular fa-folders"></i>&nbsp;
+            <ul>
+                
+                
+                    
+                        
+                        <li>
+                            <a href="/categories/NLP/">NLP</a>&nbsp;
+                        </li>
+                    
+                    
+                
+                    
+                        
+                            <li>></li>
+                        
+                        <li>
+                            <a href="/categories/NLP/CS224N/">CS224N</a>&nbsp;
+                        </li>
+                    
+                    
+                
             </ul>
-        </section>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fa-regular fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/NLP/">NLP</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+
+    
+    
+        <span class="article-wordcount article-meta-item">
+            <i class="fa-regular fa-typewriter"></i>&nbsp;<span>223 Words</span>
+        </span>
+    
+    
+        <span class="article-min2read article-meta-item">
+            <i class="fa-regular fa-clock"></i>&nbsp;<span>1 Mins</span>
+        </span>
+    
+    
+        <span class="article-pv article-meta-item">
+            <i class="fa-regular fa-eye"></i>&nbsp;<span id="busuanzi_value_page_pv"></span>
+        </span>
     
 </div>
 
+                    </div>
+                </div>
+            </div>
+        
+
+        
+
+
+        <div class="article-content markdown-body">
+            <h1 id="easy-demo"><a href="#easy-demo" class="headerlink" title="easy demo"></a>easy demo</h1><ol>
+<li>根据语料整理出字典dic</li>
+<li>将所有的句子统一长度</li>
+<li>给出input target</li>
+<li>将input target对应dit中index</li>
+<li>one-hot编码 Input shape: (3, 14, 17) –&gt; (Batch Size, Sequence Length, One-Hot Encoding Size)</li>
+<li>训练model<ul>
+<li>model的参数：1. input_size . hidden_dim . output_size batch_size</li>
+</ul>
+</li>
+<li>预测</li>
+</ol>
+<h1 id="from-Limu"><a href="#from-Limu" class="headerlink" title="from Limu"></a>from Limu</h1><p>想象成一个长方体 长为时间步长 宽为vocab_size 高为batch_size &#x3D;》 又相当于 每层都是一个batch 每个时间步 进去竖着的一个切片<br>batch_size &#x3D; 32<br>num_steps &#x3D; 35<br>num_hiddens &#x3D; 256<br>num_epochs &#x3D; 500<br>learning_rate &#x3D; 1</p>
+<h2 id="加载数据"><a href="#加载数据" class="headerlink" title="加载数据"></a>加载数据</h2><p>train_iter, vocab &#x3D; load_data_time_machine(batch_size, num_steps)</p>
+<p>train_iter<br>使用id表示了数据集<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/LM/RNN02.jpg"
+                      alt="images"
+                ></p>
+<p>vocab 相当于字典的 len&#x3D;28 包括26个字母和空格和unk 包括词频<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/LM/RNN01.jpg"
+                      alt="images"
+                ></p>
+<p>以上是包括了文章所有的数据</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><p>batch_size &#x3D; 32<br>num_steps &#x3D; 35<br>num_hiddens &#x3D; 512<br>num_epochs &#x3D; 500<br>lr &#x3D; 1<br>use_random_iter &#x3D; True</p>
+<p>train_iter, vocab &#x3D; load_data_time_machine(batch_size, num_steps,<br>                                           use_random_iter&#x3D;use_random_iter)<br>net &#x3D; RNNModelScratch(len(vocab), num_hiddens, device,<br>                      get_params, init_rnn_state, gru)<br>train(net, train_iter, vocab, lr, num_epochs, device,<br>      use_random_iter&#x3D;use_random_iter)<br>plt.show()</p>
+
+        </div>
+
+        
+            <div class="post-copyright-info">
+                <div class="article-copyright-info-container">
+    <ul>
+        <li><strong>Title:</strong> RNN-Pytorch实现demo</li>
+        <li><strong>Author:</strong> Jason</li>
+        <li><strong>Created at
+                :</strong> 2023-09-22 08:49:07</li>
+        
+            <li>
+                <strong>Updated at
+                    :</strong> 2023-09-27 18:08:30
+            </li>
+        
+        <li>
+            <strong>Link:</strong> https://xxxijason1201.github.io/2023/09/22/NLP/CS224n/RNN/
+        </li>
+        <li>
+            <strong>
+                License:
+            </strong>
+            
+            This work is licensed under <a class="license" target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a>.
+            
+
+        </li>
+    </ul>
 </div>
+
+            </div>
+        
+
+        
+            <ul class="post-tags-box">
+                
+                    <li class="tag-item">
+                        <a href="/tags/NLP/">#NLP</a>&nbsp;
+                    </li>
+                
+            </ul>
+        
+
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/09/26/%E5%AF%86%E7%A0%81%E5%AD%A6/001/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">密码学记</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                        rel="next"
+                        href="/2023/09/21/Project%20Management/01/"
+                        >
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">Project Management</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
+            </div>
+        
+
+
+        
+            <div class="comment-container">
+                <div class="comments-container pjax">
+    <div id="comment-anchor"></div>
+    <div class="comment-area-title">
+        <i class="fa-solid fa-comments"></i>&nbsp;Comments
+    </div>
+    
+
+        
+            
+ 
+    <div id="waline"></div>
+    <script type="module"  data-swup-reload-script>
+        import { init } from 'https://evan.beee.top/js/waline.mjs';
+
+        function loadWaline() {
+            init({
+                el: '#waline',
+                serverURL: 'https://waline-xxxijason.6eek.net',
+                lang: 'zh-CN',
+                dark: 'body[class~="dark-mode"]',
+                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
+            });
+        }
+
+        if ('true') {
+            const loadWalineTimeout = setTimeout(() => {
+                loadWaline();
+                clearTimeout(loadWalineTimeout);
+            }, 1000);
+        } else {
+            window.addEventListener('DOMContentLoaded', loadWaline);
+        }
+        
+    </script>
+
+
+
+        
+    
+</div>
+
+            </div>
+        
+    </div>
+
+    
+        <div class="toc-content-container">
+            <div class="post-toc-wrap">
+    <div class="post-toc">
+        <div class="toc-title">On this page</div>
+        <div class="page-title">RNN-Pytorch实现demo</div>
+        <ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#easy-demo"><span class="nav-text">easy demo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#from-Limu"><span class="nav-text">from Limu</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE"><span class="nav-text">加载数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li></ol>
+
+    </div>
+</div>
+        </div>
+    
+</div>
+
+
 
                 
 
@@ -594,6 +702,27 @@
         </div>
     </div>
 
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="article-tools-list">
+        <!-- TOC aside toggle -->
+        
+            <li class="right-bottom-tools page-aside-toggle">
+                <i class="fa-regular fa-outdent"></i>
+            </li>
+        
+
+        <!-- go comment -->
+        
+            <li class="go-comment">
+                <i class="fa-regular fa-comments"></i>
+            </li>
+        
+    </ul>
+</div>
+
+        </div>
     
 
     <div class="right-side-tools-container">
